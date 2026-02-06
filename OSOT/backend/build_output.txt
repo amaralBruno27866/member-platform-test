@@ -1,5 +1,0 @@
-
-> osot-dataverse-api@0.0.1 build
-> nest build && node copy-templates.js
-
-Email templates copied to dist/emails/templates

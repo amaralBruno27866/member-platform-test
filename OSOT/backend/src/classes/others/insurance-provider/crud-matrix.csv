@@ -1,4 +1,0 @@
-User Type/CRUD,Create,Read,Update,Delete
-Owner,FALSE,TRUE,FALSE,FALSE
-Admin,FALSE,TRUE,TRUE,FALSE
-Main,TRUE,TRUE,TRUE,TRUE

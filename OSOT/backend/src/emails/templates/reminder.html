@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Reminder - OSOT</title>
+  </head>
+  <body>
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h2>⏰ Registration Reminder</h2>
+      <p>Hello,</p>
+      <p>
+        This is a friendly reminder that your OSOT registration is still pending
+        email confirmation.
+      </p>
+      <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 20px; margin: 20px 0; border-radius: 5px;">
+        <h3 style="color: #856404; margin-top: 0;">⚠️ Time Sensitive</h3>
+        <p style="color: #856404; margin-bottom: 0;">
+          Your confirmation token expires in approximately
+          <strong>{{hours}} hours and {{minutes}} minutes</strong>
+        </p>
+      </div>
+      {{#if confirmationToken}}
+      <div style="background-color: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 5px;">
+        <h3>Your Confirmation Token:</h3>
+        <p style="font-family: monospace; font-size: 14px; background-color: white; padding: 10px; border: 1px solid #ddd; word-break: break-all;">
+          {{confirmationToken}}
+        </p>
+      </div>
+      {{/if}}
+      <p><strong>To complete your registration:</strong></p>
+      <ol>
+        <li>Copy the token above</li>
+        <li>Go to the registration confirmation page</li>
+        <li>Paste the token in the confirmation field</li>
+        <li>Submit to activate your account</li>
+      </ol>
+      <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 15px; margin: 20px 0; border-radius: 5px;">
+        <p style="color: #721c24; margin-bottom: 0;">
+          <strong>Important:</strong> If you don't confirm your email before the
+          deadline, you'll need to start the registration process again.
+        </p>
+      </div>
+      <p>
+        If you have any questions or need assistance, please contact our support
+        team.
+      </p>
+      <hr style="margin: 30px 0;" />
+      <p style="color: #666; font-size: 12px;">
+        This is an automated reminder from OSOT Registration System.
+      </p>
+    </div>
+  </body>
+</html>

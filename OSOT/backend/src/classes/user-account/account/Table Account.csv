@@ -1,0 +1,22 @@
+Display name,Description,Data type,Format,Behavior,Required,Searchable,Allow form fill assistance,Choices,Related table,Selecting multiple choices is allowed,Sync with global choice?,Sync this choice with,Default choice,Enum,Autonumber type,Prefix,Minimum number of digits,Seed value,Preview,Schema name,Logical name,Relationship name,Minimum value,Maximum value,Precision source,Time zone adjustment,Maximum character count,IME mode,Enabel auditing,Sortable
+Account_ID,,Autonumber,,,optional,TRUE,TRUE,,,,,,,,String prefixes number,osot,7,1,osot-0000001,osot_Account_ID,osot_account_id,,,,,,850,Disabled,TRUE,TRUE
+Table_Account,Unique identifier for entity instances,Unique identifier,,,System required,TRUE,FALSE,,,,,,,,,,,,,osot_Table_AccountId,osot_table_accountid,,,,,,,,FALSE,FALSE
+Table_Organization,,Lookup,,,Business required,TRUE,TRUE,,Table_Organization,,,,,,,,,,,osot_Table_Organization,osot_table_organization,osot_Table_Account_osot_Table_Organization_osot_Table_Organization,,,,,,,FALSE,FALSE
+Last_Name,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Last_Name,osot_last_name,,,,,,255,Disabled,TRUE,TRUE
+First_Name,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_First_Name,osot_first_name,,,,,,255,Disabled,TRUE,TRUE
+Date_Of_Birth,,Date and time,Date only,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Date_Of_Birth,osot_date_of_birth,,,,,Time zone independent,,Disabled,TRUE,TRUE
+Mobile_Phone,,Single line of text,Phone number,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Mobile_Phone,osot_mobile_phone,,,,,,14,Disabled,TRUE,FALSE
+Email,,SIngle line of text,Email,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Email,osot_email,,,,,,255,Disabled,TRUE,FALSE
+Password,,SIngle line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Password,osot_password,,,,,,255,Disabled,TRUE,TRUE
+Account_Group,,Choice,,Simple,Business required,TRUE,TRUE,,,FALSE,YES,Choices_Account_Group,,account-group.enum.ts,,,,,,osot_Account_Group,osot_account_group,,,,,,,,TRUE,FALSE
+Account_Declaration,,Yes/No,,Simple,Business required,TRUE,TRUE,No = 0; Yes = 1,,,,,No,,,,,,,osot_Account_Declaration,osot_account_declaration,,,,,,,,TRUE,FALSE
+Account_Status,,Choice,,Simple,Optional,TRUE,TRUE,,,FALSE,YES,Choices_Status,Pending,account-status.enum.ts,,,,,,osot_Account_Status,osot_account_status,,,,,,,,TRUE,FALSE
+Active_Member,,Yes/No,,Simple,Optional,TRUE,TRUE,No = 0; Yes = 1,,,,,No,,,,,,,osot_Active_Member,osot_active_member,,,,,,,,TRUE,FALSE
+Access_Modifiers,,Choice,,Simple,Optional,TRUE,TRUE,,,FALSE,YES,Choices_Access_Modifiers,Private,access-modifier.enum.ts,,,,,,osot_Access_Modifiers,osot_access_modifiers,,,,,,,,TRUE,FALSE
+Privilege,,Choice,,Simple,Optional,TRUE,TRUE,,,FALSE,YES,Choices_Privilege,Owner,privilege.enum.ts,,,,,,osot_Privilege,osot_privilege,,,,,,,,TRUE,FALSE
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Table Information,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Display Name,Table_Account,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Plural Name,Table_Accounts,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Schema Name,osot_Table_Account,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Logical Name,osot_table_account,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

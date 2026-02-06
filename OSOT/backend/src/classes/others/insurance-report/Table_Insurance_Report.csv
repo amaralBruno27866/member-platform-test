@@ -1,0 +1,24 @@
+Display name,Description,Data type,Format,Behavior,Required,Searchable,Allow form fill assistance,Choices,Related table,Selecting multiple choices is allowed,Sync with global choice?,Sync this choice with,Default choice,Enum,Autonumber type,Prefix,Minimum number of digits,Seed value,Preview,Schema name,Logical name,Relationship name,Size of number,Minimum value,Maximum value,Decimal Places,Precision source,Time zone adjustment,Maximum character count,IME mode,Enabel auditing,Sortable
+Report_ID,,Autonumber,,,Business required,TRUE,TRUE,,,,,,,,String prefixed number,osot-rep,7,1,osot-rep-0000001,osot_Report_ID,osot_report_id,,,,,,,,850,Disabled,TRUE,TRUE
+Table_Insurance_Report,Unique identifier for entity instances,Unique identifier,,,System required,TRUE,FALSE,,,,,,,,,,,,,osot_Table_Insurance_ReportId,osot_Table_Insurance_ReportId,,,,,,,,,,FALSE,FALSE
+Organization,,Lookup,,,Business required,TRUE,TRUE,,Table_Organization,,,,,,,,,,,osot_Table_Organization,osot_table_organization,osot_Table_Insurance_Report_osot_Table_Organization_osot_Table_Organization,,,,,,,,,FALSE,FALSE
+Period_Start,,Date and time,Date only,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Period_Start,osot_period_start,,,,,,,User local,,Disabled,TRUE,FALSE
+Period_End,,Date and time,Date only,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Period_End,osot_period_end,,,,,,,User local,,Disabled,TRUE,FALSE
+Total_Records,,Whole number,None,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Total_Records,osot_total_records,,Normal,1,"2,147,483,647",,,,,,TRUE,FALSE
+Total_Value,,Currency,,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Total_Value,osot_total_value,,,0,"922,337,203,685,477",,Currency precision,,,Disabled,TRUE,FALSE
+Report_Status,,Choice,,Simple,Business required,TRUE,TRUE,TRUE,,FALSE,TRUE,Choices_Report_Status,None,report-status.enum.ts,,,,,,osot_Report_Status,osot_report_status,,,,,,,,,,TRUE,FALSE
+Approved_Token,,Single line of text,Text,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Approved_Token,osot_approved_token,,,,,,,,1000,Auto,TRUE,FALSE
+Rejection_Token,,Single line of text,Text,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Rejection_Token,osot_rejection_token,,,,,,,,1000,Auto,TRUE,FALSE
+Approved_By,The user id that approved the report,Single line of text,Text,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Approved_By,osot_approved_by,,,,,,,,850,Disabled,TRUE,FALSE
+Approved_Date,,Date and time,Date and time,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Approved_Date,osot_approved_date,,,,,,,User local,,Disabled,TRUE,FALSE
+Reject_By,The user id that approved the report,Single line of text,Text,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Reject_By,osot_reject_by,,,,,,,,850,Disabled,TRUE,FALSE
+Rejected_Date,,Date and time,Date and time,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Rejected_Date,osot_rejected_date,,,,,,,User local,,Disabled,TRUE,FALSE
+Rejection_Reason,,Single line of text,Text area,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Rejection_Reason,osot_rejection_reason,,,,,,,,4000,Disabled,TRUE,FALSE
+Privilege,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,FALSE,TRUE,Choices_Privilege,Main,privilege.enum.ts,,,,,,osot_Privilege,osot_privilege,,,,,,,,,,TRUE,FALSE
+Access_Modifier,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,FALSE,TRUE,Choices_Access_Modifiers,Private,access-modifier.enum.ts,,,,,,osot_Access_Modifier,osot_access_modifier,,,,,,,,,,TRUE,FALSE
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Table Information,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Display Name,Table_Insurance_Report,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Plural Name,Table_Insurance_Reports,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Schema Name,osot_Table_Insurance_Report,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Logical Name,osot_table_insurance_report,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

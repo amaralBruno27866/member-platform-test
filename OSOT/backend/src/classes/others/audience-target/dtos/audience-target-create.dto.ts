@@ -1,0 +1,834 @@
+/**
+ * Create Audience Target DTO
+ * User-provided fields for creating a new audience target
+ *
+ * BUSINESS RULES:
+ * - Product lookup is REQUIRED for creation
+ * - All 35 multiple choice fields are OPTIONAL
+ * - Each field allows 0-50 selections
+ * - One target per product (enforced at repository layer via findByProductId)
+ * - Uses OData binding format for product relationship
+ *
+ * USAGE CONTEXT:
+ * - POST /private/audience-target (create new target)
+ * - Used by services to validate incoming creation requests
+ * - System generates ID, timestamps, and owner automatically
+ *
+ * VALIDATION:
+ * - Product GUID required and must exist in products table
+ * - Each multiple choice field validates against respective enum
+ * - Array size constraints: 0-50 selections per field
+ * - Repository checks for existing target before creation
+ */
+
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsNotEmpty,
+  IsString,
+  IsOptional,
+  IsArray,
+  IsEnum,
+  ArrayMaxSize,
+  ArrayMinSize,
+} from 'class-validator';
+
+// Common enums integration
+import {
+  AccountGroup,
+  AffiliateArea,
+  AffiliateEligibility,
+  Category,
+  City,
+  CotoStatus,
+  Gender,
+  GraduationYear,
+  IndigenousDetail,
+  Language,
+  OtUniversity,
+  OtaCollege,
+  Province,
+  Race,
+} from '../../../../common/enums';
+
+// Employment enums integration
+import { Benefits } from '../../../membership/membership-employment/enums/benefits.enum';
+import { EmploymentStatus } from '../../../membership/membership-employment/enums/employment-status.enum';
+import { Funding } from '../../../membership/membership-employment/enums/funding.enum';
+import { HourlyEarnings } from '../../../membership/membership-employment/enums/hourly-earnings.enum';
+import { PracticeYears } from '../../../membership/membership-employment/enums/practice-years.enum';
+import { RoleDescription } from '../../../membership/membership-employment/enums/role-descriptor.enum';
+import { WorkHours } from '../../../membership/membership-employment/enums/work-hours.enum';
+
+// Practice enums integration
+import { ClientsAge } from '../../../membership/membership-practices/enums/clients-age.enum';
+import { PracticeArea } from '../../../membership/membership-practices/enums/practice-area.enum';
+import { PracticeServices } from '../../../membership/membership-practices/enums/practice-services.enum';
+import { PracticeSettings } from '../../../membership/membership-practices/enums/practice-settings.enum';
+
+// Preference enums integration
+import { PracticePromotion } from '../../../membership/membership-preferences/enums/practice-promotion.enum';
+import { PsychotherapySupervision } from '../../../membership/membership-preferences/enums/psychotherapy-supervision.enum';
+import { SearchTools } from '../../../membership/membership-preferences/enums/search-tools.enum';
+import { ThirdParties } from '../../../membership/membership-preferences/enums/third-parties.enum';
+
+/**
+ * Create Audience Target DTO
+ * Contains product lookup (required) and 35 optional multiple choice fields
+ */
+export class CreateAudienceTargetDto {
+  // ========================================
+  // RELATIONSHIP FIELDS (REQUIRED)
+  // ========================================
+
+  @ApiProperty({
+    example: '/osot_table_products/p1r2o3d4-u5c6-7890-abcd-product123456',
+    description:
+      'Product relationship in OData bind format (required) - Format: /osot_table_products/{productGuid}',
+  })
+  @IsNotEmpty({ message: 'Product relationship is required' })
+  @IsString({ message: 'Product bind must be a string' })
+  ['osot_Table_Product@odata.bind']: string;
+
+  // ========================================
+  // ACCOUNT GROUP (1 field)
+  // ========================================
+
+  @ApiProperty({
+    example: [
+      AccountGroup.OCCUPATIONAL_THERAPIST,
+      AccountGroup.OCCUPATIONAL_THERAPIST_ASSISTANT,
+    ],
+    description:
+      'Account groups to target (multi-select, optional, 0-50 selections)',
+    enum: AccountGroup,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Account group must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Account group cannot exceed 50 selections',
+  })
+  @IsEnum(AccountGroup, {
+    each: true,
+    message: 'Each value must be a valid AccountGroup enum',
+  })
+  osot_account_group?: AccountGroup[];
+
+  // ========================================
+  // AFFILIATE (3 fields)
+  // ========================================
+
+  @ApiProperty({
+    example: [
+      AffiliateArea.HEALTHCARE_AND_LIFE_SCIENCES,
+      AffiliateArea.INFORMATION_TECHNOLOGY_AND_SOFTWARE,
+    ],
+    description:
+      'Affiliate service areas (multi-select, optional, 0-50 selections)',
+    enum: AffiliateArea,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Affiliate area must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Affiliate area cannot exceed 50 selections',
+  })
+  @IsEnum(AffiliateArea, {
+    each: true,
+    message: 'Each value must be a valid AffiliateArea enum',
+  })
+  osot_affiliate_area?: AffiliateArea[];
+
+  @ApiProperty({
+    example: [City.TORONTO, City.OTTAWA],
+    description: 'Affiliate cities (multi-select, optional, 0-50 selections)',
+    enum: City,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Affiliate city must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Affiliate city cannot exceed 50 selections',
+  })
+  @IsEnum(City, {
+    each: true,
+    message: 'Each value must be a valid City enum',
+  })
+  osot_affiliate_city?: City[];
+
+  @ApiProperty({
+    example: [Province.ONTARIO, Province.QUEBEC],
+    description:
+      'Affiliate provinces (multi-select, optional, 0-50 selections)',
+    enum: Province,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Affiliate province must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Affiliate province cannot exceed 50 selections',
+  })
+  @IsEnum(Province, {
+    each: true,
+    message: 'Each value must be a valid Province enum',
+  })
+  osot_affiliate_province?: Province[];
+
+  // ========================================
+  // ADDRESS (2 fields)
+  // ========================================
+
+  @ApiProperty({
+    example: [City.TORONTO, City.MISSISSSAUGA],
+    description: 'Member cities (multi-select, optional, 0-50 selections)',
+    enum: City,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Membership city must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Membership city cannot exceed 50 selections',
+  })
+  @IsEnum(City, {
+    each: true,
+    message: 'Each value must be a valid City enum',
+  })
+  osot_membership_city?: City[];
+
+  @ApiProperty({
+    example: [Province.ONTARIO, Province.BRITISH_COLUMBIA],
+    description: 'Member provinces (multi-select, optional, 0-50 selections)',
+    enum: Province,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Province must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Province cannot exceed 50 selections',
+  })
+  @IsEnum(Province, {
+    each: true,
+    message: 'Each value must be a valid Province enum',
+  })
+  osot_province?: Province[];
+
+  // ========================================
+  // IDENTITY (4 fields)
+  // ========================================
+
+  @ApiProperty({
+    example: [Gender.FEMALE, Gender.MALE],
+    description: 'Gender identities (multi-select, optional, 0-50 selections)',
+    enum: Gender,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Gender must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Gender cannot exceed 50 selections',
+  })
+  @IsEnum(Gender, {
+    each: true,
+    message: 'Each value must be a valid Gender enum',
+  })
+  osot_gender?: Gender[];
+
+  @ApiProperty({
+    example: [IndigenousDetail.FIRST_NATIONS, IndigenousDetail.METIS],
+    description: 'Indigenous details (multi-select, optional, 0-50 selections)',
+    enum: IndigenousDetail,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Indigenous details must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Indigenous details cannot exceed 50 selections',
+  })
+  @IsEnum(IndigenousDetail, {
+    each: true,
+    message: 'Each value must be a valid IndigenousDetail enum',
+  })
+  osot_indigenous_details?: IndigenousDetail[];
+
+  @ApiProperty({
+    example: [Language.ENGLISH, Language.FRENCH],
+    description:
+      'Language preferences (multi-select, optional, 0-50 selections)',
+    enum: Language,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Language must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Language cannot exceed 50 selections',
+  })
+  @IsEnum(Language, {
+    each: true,
+    message: 'Each value must be a valid Language enum',
+  })
+  osot_language?: Language[];
+
+  @ApiProperty({
+    example: [Race.CHINESE, Race.BLACK],
+    description: 'Racial identities (multi-select, optional, 0-50 selections)',
+    enum: Race,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Race must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Race cannot exceed 50 selections',
+  })
+  @IsEnum(Race, {
+    each: true,
+    message: 'Each value must be a valid Race enum',
+  })
+  osot_race?: Race[];
+
+  // ========================================
+  // MEMBERSHIP CATEGORY (2 fields)
+  // ========================================
+
+  @ApiProperty({
+    example: [AffiliateEligibility.PRIMARY, AffiliateEligibility.PREMIUM],
+    description:
+      'Affiliate eligibility (multi-select, optional, 0-50 selections)',
+    enum: AffiliateEligibility,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Eligibility affiliate must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Eligibility affiliate cannot exceed 50 selections',
+  })
+  @IsEnum(AffiliateEligibility, {
+    each: true,
+    message: 'Each value must be a valid AffiliateEligibility enum',
+  })
+  osot_eligibility_affiliate?: AffiliateEligibility[];
+
+  @ApiProperty({
+    example: [4, 5],
+    description:
+      'Membership categories (multi-select, optional, 0-50 selections)',
+    enum: Category,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Membership category must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Membership category cannot exceed 50 selections',
+  })
+  @IsEnum(Category, {
+    each: true,
+    message: 'Each value must be a valid Category enum',
+  })
+  osot_membership_category?: Category[];
+
+  // ========================================
+  // EMPLOYMENT (9 fields)
+  // ========================================
+
+  @ApiProperty({
+    example: [HourlyEarnings.BETWEEN_31_TO_40, HourlyEarnings.BETWEEN_41_TO_50],
+    description:
+      'Hourly earnings ranges (multi-select, optional, 0-50 selections)',
+    enum: HourlyEarnings,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Earnings must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Earnings cannot exceed 50 selections',
+  })
+  @IsEnum(HourlyEarnings, {
+    each: true,
+    message: 'Each value must be a valid HourlyEarnings enum',
+  })
+  osot_earnings?: HourlyEarnings[];
+
+  @ApiProperty({
+    example: [HourlyEarnings.BETWEEN_51_TO_60, HourlyEarnings.BETWEEN_61_TO_70],
+    description:
+      'Self-employed direct earnings (multi-select, optional, 0-50 selections)',
+    enum: HourlyEarnings,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Earnings selfdirect must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Earnings selfdirect cannot exceed 50 selections',
+  })
+  @IsEnum(HourlyEarnings, {
+    each: true,
+    message: 'Each value must be a valid HourlyEarnings enum',
+  })
+  osot_earnings_selfdirect?: HourlyEarnings[];
+
+  @ApiProperty({
+    example: [HourlyEarnings.BETWEEN_31_TO_40, HourlyEarnings.BETWEEN_41_TO_50],
+    description:
+      'Self-employed indirect earnings (multi-select, optional, 0-50 selections)',
+    enum: HourlyEarnings,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Earnings selfindirect must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Earnings selfindirect cannot exceed 50 selections',
+  })
+  @IsEnum(HourlyEarnings, {
+    each: true,
+    message: 'Each value must be a valid HourlyEarnings enum',
+  })
+  osot_earnings_selfindirect?: HourlyEarnings[];
+
+  @ApiProperty({
+    example: [
+      Benefits.EXTENDED_HEALTH_DENTAL_CARE,
+      Benefits.DISABILITY_INSURANCE,
+    ],
+    description:
+      'Employment benefits (multi-select, optional, 0-50 selections)',
+    enum: Benefits,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Employment benefits must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Employment benefits cannot exceed 50 selections',
+  })
+  @IsEnum(Benefits, {
+    each: true,
+    message: 'Each value must be a valid Benefits enum',
+  })
+  osot_employment_benefits?: Benefits[];
+
+  @ApiProperty({
+    example: [
+      EmploymentStatus.EMPLOYEE_SALARIED,
+      EmploymentStatus.EMPLOYEE_CONTRACT,
+    ],
+    description: 'Employment status (multi-select, optional, 0-50 selections)',
+    enum: EmploymentStatus,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Employment status must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Employment status cannot exceed 50 selections',
+  })
+  @IsEnum(EmploymentStatus, {
+    each: true,
+    message: 'Each value must be a valid EmploymentStatus enum',
+  })
+  osot_employment_status?: EmploymentStatus[];
+
+  @ApiProperty({
+    example: [
+      Funding.PROVINCIAL_GOVERMENT_HEALTH,
+      Funding.PRIVATE_PAY_OUT_OF_POCKET,
+    ],
+    description:
+      'Position funding sources (multi-select, optional, 0-50 selections)',
+    enum: Funding,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Position funding must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Position funding cannot exceed 50 selections',
+  })
+  @IsEnum(Funding, {
+    each: true,
+    message: 'Each value must be a valid Funding enum',
+  })
+  osot_position_funding?: Funding[];
+
+  @ApiProperty({
+    example: [PracticeYears.NEW_GRADUATE, PracticeYears.BETWEEN_1_AND_2_YEARS],
+    description: 'Years in practice (multi-select, optional, 0-50 selections)',
+    enum: PracticeYears,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Practice years must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Practice years cannot exceed 50 selections',
+  })
+  @IsEnum(PracticeYears, {
+    each: true,
+    message: 'Each value must be a valid PracticeYears enum',
+  })
+  osot_practice_years?: PracticeYears[];
+
+  @ApiProperty({
+    example: [
+      RoleDescription.DIRECT_INDIRECT_CARE_PROVIDER,
+      RoleDescription.ADMINISTRATION_MANAGEMENT,
+    ],
+    description: 'Role descriptors (multi-select, optional, 0-50 selections)',
+    enum: RoleDescription,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Role description must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Role description cannot exceed 50 selections',
+  })
+  @IsEnum(RoleDescription, {
+    each: true,
+    message: 'Each value must be a valid RoleDescription enum',
+  })
+  osot_role_description?: RoleDescription[];
+
+  @ApiProperty({
+    example: [WorkHours.EXACTLY_35, WorkHours.MORE_THAN_37],
+    description:
+      'Work hours per week (multi-select, optional, 0-50 selections)',
+    enum: WorkHours,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Work hours must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Work hours cannot exceed 50 selections',
+  })
+  @IsEnum(WorkHours, {
+    each: true,
+    message: 'Each value must be a valid WorkHours enum',
+  })
+  osot_work_hours?: WorkHours[];
+
+  // ========================================
+  // PRACTICE (4 fields)
+  // ========================================
+
+  @ApiProperty({
+    example: [ClientsAge.ADULT, ClientsAge.OLDER],
+    description:
+      'Client age groups served (multi-select, optional, 0-50 selections)',
+    enum: ClientsAge,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Client age must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Client age cannot exceed 50 selections',
+  })
+  @IsEnum(ClientsAge, {
+    each: true,
+    message: 'Each value must be a valid ClientsAge enum',
+  })
+  osot_client_age?: ClientsAge[];
+
+  @ApiProperty({
+    example: [PracticeArea.CHRONIC_PAIN, PracticeArea.STROKE],
+    description: 'Practice areas (multi-select, optional, 0-50 selections)',
+    enum: PracticeArea,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Practice area must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Practice area cannot exceed 50 selections',
+  })
+  @IsEnum(PracticeArea, {
+    each: true,
+    message: 'Each value must be a valid PracticeArea enum',
+  })
+  osot_practice_area?: PracticeArea[];
+
+  @ApiProperty({
+    example: [
+      PracticeServices.COGNITIVE_BEHAVIOUR_THERAPY,
+      PracticeServices.PAIN_MANAGEMENT,
+    ],
+    description:
+      'Practice services offered (multi-select, optional, 0-50 selections)',
+    enum: PracticeServices,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Practice services must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Practice services cannot exceed 50 selections',
+  })
+  @IsEnum(PracticeServices, {
+    each: true,
+    message: 'Each value must be a valid PracticeServices enum',
+  })
+  osot_practice_services?: PracticeServices[];
+
+  @ApiProperty({
+    example: [
+      PracticeSettings.GENERAL_HOSPITAL,
+      PracticeSettings.COMMUNITY_CLINIC_AGENCY,
+    ],
+    description:
+      'Practice settings/environments (multi-select, optional, 0-50 selections)',
+    enum: PracticeSettings,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Practice settings must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Practice settings cannot exceed 50 selections',
+  })
+  @IsEnum(PracticeSettings, {
+    each: true,
+    message: 'Each value must be a valid PracticeSettings enum',
+  })
+  osot_practice_settings?: PracticeSettings[];
+
+  // ========================================
+  // PREFERENCE (4 fields)
+  // ========================================
+
+  @ApiProperty({
+    example: [
+      SearchTools.PROFESSIONAL_NETWORKS,
+      SearchTools.POTENTIAL_MENTORING,
+    ],
+    description:
+      'Search tool preferences (multi-select, optional, 0-50 selections)',
+    enum: SearchTools,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Membership search tools must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Membership search tools cannot exceed 50 selections',
+  })
+  @IsEnum(SearchTools, {
+    each: true,
+    message: 'Each value must be a valid SearchTools enum',
+  })
+  osot_membership_search_tools?: SearchTools[];
+
+  @ApiProperty({
+    example: [PracticePromotion.SELF, PracticePromotion.EMPLOYER],
+    description:
+      'Practice promotion preferences (multi-select, optional, 0-50 selections)',
+    enum: PracticePromotion,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Practice promotion must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Practice promotion cannot exceed 50 selections',
+  })
+  @IsEnum(PracticePromotion, {
+    each: true,
+    message: 'Each value must be a valid PracticePromotion enum',
+  })
+  osot_practice_promotion?: PracticePromotion[];
+
+  @ApiProperty({
+    example: [
+      PsychotherapySupervision.COGNITIVE_BEHAVIOURAL,
+      PsychotherapySupervision.DIALECTICAL_BEHAVIOURAL,
+    ],
+    description:
+      'Psychotherapy supervision types (multi-select, optional, 0-50 selections)',
+    enum: PsychotherapySupervision,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Psychotherapy supervision must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Psychotherapy supervision cannot exceed 50 selections',
+  })
+  @IsEnum(PsychotherapySupervision, {
+    each: true,
+    message: 'Each value must be a valid PsychotherapySupervision enum',
+  })
+  osot_psychotherapy_supervision?: PsychotherapySupervision[];
+
+  @ApiProperty({
+    example: [ThirdParties.RECRUITMENT, ThirdParties.PRODUCT],
+    description:
+      'Third-party interests (multi-select, optional, 0-50 selections)',
+    enum: ThirdParties,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'Third parties must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'Third parties cannot exceed 50 selections',
+  })
+  @IsEnum(ThirdParties, {
+    each: true,
+    message: 'Each value must be a valid ThirdParties enum',
+  })
+  osot_third_parties?: ThirdParties[];
+
+  // ========================================
+  // EDUCATION OT (3 fields)
+  // ========================================
+
+  @ApiProperty({
+    example: [CotoStatus.GENERAL, CotoStatus.PROVISIONAL_TEMPORARY],
+    description:
+      'COTO registration status (multi-select, optional, 0-50 selections)',
+    enum: CotoStatus,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'COTO status must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'COTO status cannot exceed 50 selections',
+  })
+  @IsEnum(CotoStatus, {
+    each: true,
+    message: 'Each value must be a valid CotoStatus enum',
+  })
+  osot_coto_status?: CotoStatus[];
+
+  @ApiProperty({
+    example: [GraduationYear.YEAR_2020, GraduationYear.YEAR_2021],
+    description:
+      'OT graduation years (multi-select, optional, 0-50 selections)',
+    enum: GraduationYear,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'OT grad year must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'OT grad year cannot exceed 50 selections',
+  })
+  @IsEnum(GraduationYear, {
+    each: true,
+    message: 'Each value must be a valid GraduationYear enum',
+  })
+  osot_ot_grad_year?: GraduationYear[];
+
+  @ApiProperty({
+    example: [
+      OtUniversity.UNIVERSITY_OF_TORONTO,
+      OtUniversity.MCMASTER_UNIVERSITY,
+    ],
+    description:
+      'OT universities attended (multi-select, optional, 0-50 selections)',
+    enum: OtUniversity,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'OT university must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'OT university cannot exceed 50 selections',
+  })
+  @IsEnum(OtUniversity, {
+    each: true,
+    message: 'Each value must be a valid OtUniversity enum',
+  })
+  osot_ot_university?: OtUniversity[];
+
+  // ========================================
+  // EDUCATION OTA (2 fields)
+  // ========================================
+
+  @ApiProperty({
+    example: [GraduationYear.YEAR_2018, GraduationYear.YEAR_2019],
+    description:
+      'OTA graduation years (multi-select, optional, 0-50 selections)',
+    enum: GraduationYear,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'OTA grad year must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'OTA grad year cannot exceed 50 selections',
+  })
+  @IsEnum(GraduationYear, {
+    each: true,
+    message: 'Each value must be a valid GraduationYear enum',
+  })
+  osot_ota_grad_year?: GraduationYear[];
+
+  @ApiProperty({
+    example: [OtaCollege.HUMBER_COLLEGE, OtaCollege.MOHAWK_COLLEGE],
+    description:
+      'OTA colleges attended (multi-select, optional, 0-50 selections)',
+    enum: OtaCollege,
+    isArray: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({ message: 'OTA college must be an array' })
+  @ArrayMinSize(0)
+  @ArrayMaxSize(50, {
+    message: 'OTA college cannot exceed 50 selections',
+  })
+  @IsEnum(OtaCollege, {
+    each: true,
+    message: 'Each value must be a valid OtaCollege enum',
+  })
+  osot_ota_college?: OtaCollege[];
+}

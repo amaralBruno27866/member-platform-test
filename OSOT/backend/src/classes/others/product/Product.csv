@@ -1,0 +1,47 @@
+Display name,Description,Data type,Format,Behavior,Required,Searchable,Allow form fill assistance,Choices,Related table,Selecting multiple choices is allowed,Sync with global choice?,Sync this choice with,Default choice,Enum,Autonumber type,Prefix,Minimum number of digits,Seed value,Preview,Schema name,Logical name,Relationship name,Minimum value,Maximum value,Decimal Places,Precision source,Time zone adjustment,Maximum character count,IME mode,Enabel auditing,Sortable
+Product ID,,Autonumber,,,Business required,TRUE,TRUE,,,,,,,,String prefixed number,osot-prod,7,1,osot-prod-0000001,osot_ProductID,osot_productid,,,,,,,850,Disable,TRUE,TRUE
+Table_Product,Unique identifier for entity instances,Unique identifier,,,System required,TRUE,FALSE,,,,,,,,,,,,,osot_Table_ProductId,osot_table_productid,,,,,,,,,FALSE,FALSE
+Table_Organization,,Lookup,,,Optional,TRUE,TRUE,,Table_Organization,,,,,,,,,,,osot_Table_Organization,osot_table_organization,osot_Table_Product_osot_Table_Organization_osot_Table_Organization,,,,,,,,FALSE,FALSE
+Product_Name,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Product_Name,osot_Product_Name,,,,,,,,Disable,TRUE,FALSE
+Product_Category,,Choice,,Simple,Business required,TRUE,TRUE,TRUE,,FALSE,TRUE,Choices_Products_Categories,,product-category.enum.ts,,,,,,osot_Product_Category,osot_product_category,,,,,,,,,TRUE,FALSE
+Product_Code,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Product_Code,osot_product_code,,,,,,,25,Disable,TRUE,FALSE
+Product_Description,,Text area,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Product_Description,osot_product_description,,,,,,,4000,Disable,TRUE,FALSE
+Insurance_Type,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,FALSE,TRUE,Choices_Insurance_Type,None,insurance-type.enum.ts,,,,,,osot_Insurance_Type,osot_insurance_type,,,,,,,,,TRUE,FALSE
+Insurance_Limit,,Currency,,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Insurance_Limit,osot_insurance_limit,,0,"922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+Product_Additional_Info,,Single line of text,Text area,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Product_Additional_Info,osot_product_additional_info,,,,,,,4000,Auto,TRUE,FALSE
+Product_Status,,Choice,,Simple,Business required,TRUE,TRUE,TRUE,,FALSE,TRUE,Choices_Product_Status,,product-status.enum.ts,,,,,,osot_Product_Status,osot_product_status,,,,,,,,,TRUE,FALSE
+Product_GL_Code,,Choice,,Simple,Business required,TRUE,TRUE,TRUE,,FALSE,TRUE,Choices_GL_Accounts,,product-gl-code.enum.ts,,,,,,osot_Product_GL_Code,osot_product_gl_code,,,,,,,,,TRUE,FALSE
+Product_Picture,,Single line of text,URL,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Product_Picture,osot_product_picture,,,,,,,850,,TRUE,FALSE
+General_Price,,Currency,,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_General_Price,osot_general_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+OT-STU_Price,,Currency,,Simple,Optional,TRUE,TRUE,TRUE,,,,,,,,,,,,osot_OTSTU_Price,osot_otstu_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+OT-NG_Price,,Currency,,Simple,Optional,TRUE,TRUE,TRUE,,,,,,,,,,,,osot_OTNG_Price,osot_otng_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+OT-PR_Price,,Currency,,Simple,Optional,TRUE,TRUE,TRUE,,,,,,,,,,,,osot_OTPR_Price,osot_otpr_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+OT-NP_Price,,Currency,,Simple,Optional,TRUE,TRUE,TRUE,,,,,,,,,,,,osot_OTNP_Price,osot_otnp_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+OT-RET_Price,,Currency,,Simple,Optional,TRUE,TRUE,TRUE,,,,,,,,,,,,osot_OTRET_Price,osot_otret_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+OT-LIFE_Price,,Currency,,Simple,Optional,TRUE,TRUE,TRUE,,,,,,,,,,,,osot_OTLIFE_Price,osot_otlife_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+OTA-STU_Price,,Currency,,Simple,Optional,TRUE,TRUE,TRUE,,,,,,,,,,,,osot_OTASTU_Price,osot_otastu_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+OTA-NG_Price,,Currency,,Simple,Optional,TRUE,TRUE,TRUE,,,,,,,,,,,,osot_OTANG_Price,osot_otang_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+OTA-NP_Price,,Currency,,Simple,Optional,TRUE,TRUE,TRUE,,,,,,,,,,,,osot_OTANP_Price,osot_otanp_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+OTA-RET_Price,,Currency,,Simple,Optional,TRUE,TRUE,TRUE,,,,,,,,,,,,osot_OTARET_Price,osot_otaret_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+OTA-PR_Price,,Currency,,Simple,Optional,TRUE,TRUE,TRUE,,,,,,,,,,,,osot_OTAPR_Price,osot_otapr_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+OTA-LIFE_Price,,Currency,,Simple,Optional,TRUE,TRUE,TRUE,,,,,,,,,,,,osot_OTALIFE_Price,osot_otalife_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+ASSOC_Price,,Currency,,Simple,Optional,TRUE,TRUE,TRUE,,,,,,,,,,,,osot_ASSOC_Price,osot_assoc_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+AFF-PRIM_Price,,Currency,,Simple,Optional,TRUE,TRUE,TRUE,,,,,,,,,,,,osot_AFFPRIM_Price,osot_affprim_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+AFF-PREM_Price,,Currency,,Simple,Optional,TRUE,TRUE,TRUE,,,,,,,,,,,,osot_AFFPREM_Price,osot_affprem_price,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+Inventory,,Whole number,None,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Inventory,osot_inventory,,0,"2,147,483,647",,,,,,TRUE,FALSE
+Shipping,,Currency,,,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Shipping,osot_shipping,,"-922,337,203,685,477","922,337,203,685,477",,Currency precision,,,Disable,TRUE,FALSE
+Taxes,,Decimal,,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Taxes,osot_taxes,,"-100,000,000,000","100,000,000,000",2,,,,Disable,TRUE,FALSE
+Start_Date,,Date and time,Date only,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Start_Date,osot_start_date,,,,,,User local,,Disable,TRUE,FALSE
+End_Date,,Date and time,Date only,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_End_Date,osot_end_date,,,,,,User local,,Disable,TRUE,FALSE
+Active_Membership_Only,,Yes/No,,Simple,Optional,TRUE,TRUE,No=0|Yes=1,,,,,No=0,,,,,,,osot_Active_Membership_Only,osot_active_membership_only,,,,,,,,,TRUE,FALSE
+Post_Purchase_Info,,Single line of text,Text area,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Post_Purchase_Info,osot_post_purchase_info,,,,,,,4000,Disable,TRUE,FALSE
+Product_Year,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Product_Year,osot_product_year,,,,,,,4,Disable,TRUE,FALSE
+User_Type,,Choice,,Simple,Business required,TRUE,TRUE,TRUE,,FALSE,TRUE,Choices_User_Type_For_Product,OT/OTA = 1,product-user-type.enum.ts,,,,,,osot_User_Type,osot_user_type,,,,,,,,,TRUE,FALSE
+Privilege,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,FALSE,TRUE,Choices_Privilege,,privilege.enum.ts,,,,,,osot_Privilege,osot_privilege,,,,,,,,,TRUE,FALSE
+Access_Modifiers,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,FALSE,TRUE,Choices_Access_Modifiers,,access-modifier.enum.ts,,,,,,osot_Access_Modifiers,osot_access_modifiers,,,,,,,,,TRUE,FALSE
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Table Information,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Display Name,Table_Product,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Plural Name,Table_Products,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Schema Name,osot_Table_Product,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Logical Name,osot_table_product,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

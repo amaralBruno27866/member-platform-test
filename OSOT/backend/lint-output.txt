@@ -1,0 +1,66 @@
+
+> osot-dataverse-api@0.0.1 lint
+> eslint "{src,apps,libs,test}/**/*.ts" --fix
+
+(node:29364) ESLintIgnoreWarning: The ".eslintignore" file is no longer supported. Switch to using the "ignores" property in "eslint.config.js": https://eslint.org/docs/latest/use/configure/migration-guide#ignoring-files
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+C:\Users\BrunoAmaral\code-space\osot-dataverse-api-phantom\src\classes\others\order-product\services\order-product-crud.service.ts
+   77:15  error    Unsafe call of a(n) `error` type typed value                                                @typescript-eslint/no-unsafe-call
+   77:41  error    Unsafe member access .BUSINESS_RULE_VIOLATION on an `error` typed value                     @typescript-eslint/no-unsafe-member-access
+   90:15  error    Unsafe call of a(n) `error` type typed value                                                @typescript-eslint/no-unsafe-call
+   90:41  error    Unsafe member access .NOT_FOUND on an `error` typed value                                   @typescript-eslint/no-unsafe-member-access
+  100:9   error    Unsafe assignment of an error typed value                                                   @typescript-eslint/no-unsafe-assignment
+  101:9   error    Unsafe assignment of an error typed value                                                   @typescript-eslint/no-unsafe-assignment
+  102:9   error    Unsafe assignment of an error typed value                                                   @typescript-eslint/no-unsafe-assignment
+  103:9   error    Unsafe assignment of an error typed value                                                   @typescript-eslint/no-unsafe-assignment
+  128:15  error    Unsafe call of a(n) `error` type typed value                                                @typescript-eslint/no-unsafe-call
+  128:41  error    Unsafe member access .VALIDATION_ERROR on an `error` typed value                            @typescript-eslint/no-unsafe-member-access
+  136:13  error    Unsafe assignment of an error typed value                                                   @typescript-eslint/no-unsafe-assignment
+  136:29  error    Unsafe call of a(n) `error` type typed value                                                @typescript-eslint/no-unsafe-call
+  136:57  error    Unsafe member access .create on an `error` typed value                                      @typescript-eslint/no-unsafe-member-access
+  139:56  error    Unsafe member access .osot_table_order_productid on an `error` typed value                  @typescript-eslint/no-unsafe-member-access
+  142:58  warning  Unsafe argument of type error typed assigned to a parameter of type `OrderProductInternal`  @typescript-eslint/no-unsafe-argument
+  187:15  error    Unsafe call of a(n) `error` type typed value                                                @typescript-eslint/no-unsafe-call
+  187:41  error    Unsafe member access .NOT_FOUND on an `error` typed value                                   @typescript-eslint/no-unsafe-member-access
+  202:15  error    Unsafe call of a(n) `error` type typed value                                                @typescript-eslint/no-unsafe-call
+  202:41  error    Unsafe member access .BUSINESS_RULE_VIOLATION on an `error` typed value                     @typescript-eslint/no-unsafe-member-access
+  213:9   error    Unsafe assignment of an error typed value                                                   @typescript-eslint/no-unsafe-assignment
+  234:13  error    Unsafe assignment of an error typed value                                                   @typescript-eslint/no-unsafe-assignment
+  234:29  error    Unsafe call of a(n) `error` type typed value                                                @typescript-eslint/no-unsafe-call
+  234:57  error    Unsafe member access .update on an `error` typed value                                      @typescript-eslint/no-unsafe-member-access
+  243:58  warning  Unsafe argument of type error typed assigned to a parameter of type `OrderProductInternal`  @typescript-eslint/no-unsafe-argument
+  280:15  error    Unsafe call of a(n) `error` type typed value                                                @typescript-eslint/no-unsafe-call
+  280:41  error    Unsafe member access .NOT_FOUND on an `error` typed value                                   @typescript-eslint/no-unsafe-member-access
+  295:15  error    Unsafe call of a(n) `error` type typed value                                                @typescript-eslint/no-unsafe-call
+  295:41  error    Unsafe member access .BUSINESS_RULE_VIOLATION on an `error` typed value                     @typescript-eslint/no-unsafe-member-access
+  303:13  error    Unsafe call of a(n) `error` type typed value                                                @typescript-eslint/no-unsafe-call
+  303:41  error    Unsafe member access .delete on an `error` typed value                                      @typescript-eslint/no-unsafe-member-access
+
+C:\Users\BrunoAmaral\code-space\osot-dataverse-api-phantom\src\classes\others\order-product\services\order-product-lookup.service.ts
+   34:13  error  Unsafe assignment of an error typed value                        @typescript-eslint/no-unsafe-assignment
+   35:15  error  Unsafe call of a(n) `error` type typed value                     @typescript-eslint/no-unsafe-call
+   35:43  error  Unsafe member access .findById on an `error` typed value         @typescript-eslint/no-unsafe-member-access
+   43:7   error  Unsafe return of a value of type error                           @typescript-eslint/no-unsafe-return
+   68:13  error  Unsafe assignment of an error typed value                        @typescript-eslint/no-unsafe-assignment
+   69:15  error  Unsafe call of a(n) `error` type typed value                     @typescript-eslint/no-unsafe-call
+   69:43  error  Unsafe member access .findByOrderId on an `error` typed value    @typescript-eslint/no-unsafe-member-access
+   72:32  error  Unsafe member access .length on an `error` typed value           @typescript-eslint/no-unsafe-member-access
+   75:7   error  Unsafe return of a value of type error                           @typescript-eslint/no-unsafe-return
+   99:13  error  Unsafe assignment of an error typed value                        @typescript-eslint/no-unsafe-assignment
+  100:15  error  Unsafe call of a(n) `error` type typed value                     @typescript-eslint/no-unsafe-call
+  100:43  error  Unsafe member access .findByProductId on an `error` typed value  @typescript-eslint/no-unsafe-member-access
+  103:32  error  Unsafe member access .length on an `error` typed value           @typescript-eslint/no-unsafe-member-access
+  106:7   error  Unsafe return of a value of type error                           @typescript-eslint/no-unsafe-return
+  132:13  error  Unsafe assignment of an error typed value                        @typescript-eslint/no-unsafe-assignment
+  132:35  error  Unsafe call of a(n) `error` type typed value                     @typescript-eslint/no-unsafe-call
+  132:63  error  Unsafe member access .findAll on an `error` typed value          @typescript-eslint/no-unsafe-member-access
+  135:32  error  Unsafe member access .length on an `error` typed value           @typescript-eslint/no-unsafe-member-access
+  138:7   error  Unsafe return of a value of type error                           @typescript-eslint/no-unsafe-return
+  162:13  error  Unsafe assignment of an error typed value                        @typescript-eslint/no-unsafe-assignment
+  162:27  error  Unsafe call of a(n) `error` type typed value                     @typescript-eslint/no-unsafe-call
+  162:55  error  Unsafe member access .count on an `error` typed value            @typescript-eslint/no-unsafe-member-access
+  168:7   error  Unsafe return of a value of type error                           @typescript-eslint/no-unsafe-return
+
+Γ£û 53 problems (51 errors, 2 warnings)
+

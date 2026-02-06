@@ -1,0 +1,16 @@
+Categories,Auto-Renewal,Third Parties,Practice Promotion,Search Tools,Shadowing,Psychotherapy
+OT_LIFE,YES,YES,YES,ALL,YES,YES
+OT_NG,NO,YES,YES,ALL,YES,NO
+OT_PR,YES,YES,YES,ALL,YES,YES
+OTA_LIFE,YES,YES,NO,Except Exam and Supervising Clinical,NO,NO
+AFF_PREM,YES,YES,NO,NO,NO,NO
+AFF_PRIM,YES,YES,NO,NO,NO,NO
+ASSOC,YES,YES,NO,Only network,NO,NO
+OT_NP,YES,YES,NO,ALL,NO,NO
+OT_RET,YES,YES,NO,All except Presenter,NO,NO
+OT_STU,NO,YES,NO,Only network,NO,NO
+OTA_NG,NO,YES,NO,All except Exam and Supervising Clinical,NO,NO
+OTA_NP,YES,YES,NO,All except Exam and Supervising Clinical,NO,NO
+OTA_PR,YES,YES,NO,All except Exam and Supervising Clinical,NO,NO
+OTA_RET,YES,YES,NO,All except Exam and Supervising Clinical,NO,NO
+OTA_STU,NO,YES,NO,Only network,NO,NO

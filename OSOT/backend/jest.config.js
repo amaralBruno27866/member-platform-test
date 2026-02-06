@@ -1,0 +1,43 @@
+module.exports = {
+  moduleFileExtensions: ['js', 'json', 'ts'],
+  rootDir: '.',
+  testRegex: '.*\\.spec\\.ts$',
+  transform: {
+    '^.+\\.(t|j)s$': 'ts-jest',
+  },
+  collectCoverageFrom: [
+    'src/**/*.(t|j)s',
+    '!src/**/*.d.ts',
+    // ignora arquivos de teste, mocks, enums e bootstrap do coverage
+    '!src/main.ts',
+    '!**/*.spec.ts',
+    '!**/*.e2e-spec.ts',
+    '!test/**',
+    '!**/mocks/**',
+    '!**/mock.ts',
+    '!**/mock.js',
+    '!**/mock.tsx',
+    '!**/mock.js',
+    '!**/__mocks__/**',
+    '!src/common/enums/*.ts',
+  ],
+  coverageDirectory: './coverage',
+  testEnvironment: 'node',
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/dist/',
+    '/coverage/',
+    '/.vscode/',
+    '/scripts/',
+    '/build/',
+    '/out/',
+    '\\.module\\.ts$', // ignora todos os arquivos *.module.ts
+    'test/',
+    '\\.spec\\.ts$',
+    '\\.e2e-spec\\.ts$',
+    'mock',
+    '__mocks__',
+    'main.ts',
+    'src/common/enums',
+  ],
+};

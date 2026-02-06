@@ -1,0 +1,21 @@
+Display name,Description,Data type,Format,Behavior,Required,Searchable,Allow form fill assistance,Choices,Related table,Selecting multiple choices is allowed,Sync with global choice?,Sync this choice with,Default choice,Enum,Autonumber type,Prefix,Minimum number of digits,Seed value,Preview,Schema name,Logical name,Relationship name,Minimum value,Maximum value,Decimal Places,Precision source,Time zone adjustment,Maximum character count,IME mode,Enabel auditing,Sortable
+Organization ID,,Autonumber,,,Business required,TRUE,TRUE,,,,,,,,String prefixed number,osot-org,7,1,osot-org-0000001,osot_OrganizationID,osot_organizationid,,,,,,,,Disabled,TRUE,TRUE
+Table_Organization,Unique identifier for entity instances,Unique identifier,,,System required,TRUE,FALSE,,,,,,,,,,,,,osot_Table_OrganizationId,osot_table_organizationid,,,,,,,,,FALSE,FALSE
+Organization_Name,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Organization_Name,osot_organization_name,,,,,,,255,Disabled,TRUE,FALSE
+Legal_Name,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Legal_Name,osot_legal_name,,,,,,,255,Disabled,TRUE,FALSE
+Acronym,,Single line of text,Text,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Acronym,osot_acronym,,,,,,,100,Disabled,TRUE,FALSE
+Slug,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Slug,osot_slug,,,,,,,255,Disabled,TRUE,FALSE
+Organization_Logo,,Single line of text,URL,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Organization_Logo,osot_organization_logo,,,,,,,255,Auto,TRUE,FALSE
+Organization_Website,,Single line of text,URL,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Organization_Website,osot_organization_website,,,,,,,255,Auto,TRUE,FALSE
+Representative,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Representative,osot_representative,,,,,,,255,Disabled,TRUE,FALSE
+Organization_Email,,Single line of text,Email,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Organization_Email,osot_organization_email,,,,,,,255,Disabled,TRUE,FALSE
+Organization_Phone,,Single line of text,Phone number,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Organization_Phone,osot_organization_phone,,,,,,,14,Disabled,TRUE,FALSE
+Organization_Status,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,,YES,Choices_Status,Active,account-status.enum.ts,,,,,,osot_Organization_Status,osot_organization_status,,,,,,,,,TRUE,FALSE
+Privilege,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,,YES,Choices_Privilege,Main,privilege.enum.ts,,,,,,osot_Privilege,osot_privilege,,,,,,,,,TRUE,FALSE
+Access_Modifier,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,,YES,Choices_Access_Modifiers,Private,access-modifier.enum.ts,,,,,,osot_Access_Modifier,osot_access_modifier,,,,,,,,,TRUE,FALSE
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Table Information,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Display Name,Table_Organization,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Plural Name,Table_Organizations,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Schema Name,osot_Table_Organization,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Logical Name,osot_table_organization,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

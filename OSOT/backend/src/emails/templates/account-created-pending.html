@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Created - Pending Approval</title>
+  </head>
+  <body>
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h2>Your OSOT Account Has Been Created</h2>
+
+      <p>Hello {{userName}},</p>
+
+      <p>Great news! Your OSOT account has been successfully created and is now pending administrator approval.</p>
+
+      <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 20px; margin: 20px 0; border-radius: 5px;">
+        <h3>Account Details:</h3>
+        <ul>
+          <li><strong>Email:</strong> {{userEmail}}</li>
+          <li><strong>Account ID:</strong> {{accountId}}</li>
+          <li><strong>Creation Date:</strong> {{creationDate}}</li>
+          <li><strong>Current Status:</strong> <span style="color: #e67e22; font-weight: bold;">Pending Approval</span></li>
+        </ul>
+      </div>
+
+      <!-- Your Registration Data Summary -->
+      <div style="background-color: #e8f4f8; border: 1px solid #bee5eb; padding: 20px; margin: 20px 0; border-radius: 5px;">
+        <h3>📋 Your Registration Data Summary</h3>
+
+        {{#if accountData}}
+        <div style="margin-bottom: 20px;">
+          <h4 style="color: #2c3e50; margin-bottom: 10px;">👤 Account Information</h4>
+          <ul style="margin: 0; padding-left: 20px;">
+            <li><strong>First Name:</strong> {{accountData.firstName}}</li>
+            <li><strong>Last Name:</strong> {{accountData.lastName}}</li>
+            <li><strong>Email:</strong> {{accountData.email}}</li>
+            {{#if accountData.phone}}<li><strong>Phone:</strong> {{accountData.phone}}</li>{{/if}}
+            {{#if accountData.preferredLanguage}}<li><strong>Preferred Language:</strong> {{accountData.preferredLanguage}}</li>{{/if}}
+          </ul>
+        </div>
+        {{/if}}
+
+        {{#if addressData}}
+        <div style="margin-bottom: 20px;">
+          <h4 style="color: #2c3e50; margin-bottom: 10px;">🏠 Address Information</h4>
+          <ul style="margin: 0; padding-left: 20px;">
+            <li><strong>Street:</strong> {{addressData.street}}</li>
+            {{#if addressData.city}}<li><strong>City:</strong> {{addressData.city}}</li>{{/if}}
+            {{#if addressData.province}}<li><strong>Province:</strong> {{addressData.province}}</li>{{/if}}
+            {{#if addressData.postalCode}}<li><strong>Postal Code:</strong> {{addressData.postalCode}}</li>{{/if}}
+            {{#if addressData.country}}<li><strong>Country:</strong> {{addressData.country}}</li>{{/if}}
+          </ul>
+        </div>
+        {{/if}}
+
+        {{#if contactData}}
+        <div style="margin-bottom: 20px;">
+          <h4 style="color: #2c3e50; margin-bottom: 10px;">📞 Contact Information</h4>
+          <ul style="margin: 0; padding-left: 20px;">
+            <li><strong>Email:</strong> {{contactData.email}}</li>
+            {{#if contactData.phone}}<li><strong>Phone:</strong> {{contactData.phone}}</li>{{/if}}
+            {{#if contactData.alternatePhone}}<li><strong>Alternate Phone:</strong> {{contactData.alternatePhone}}</li>{{/if}}
+            {{#if contactData.linkedIn}}<li><strong>LinkedIn:</strong> {{contactData.linkedIn}}</li>{{/if}}
+          </ul>
+        </div>
+        {{/if}}
+
+        {{#if identityData}}
+        <div style="margin-bottom: 20px;">
+          <h4 style="color: #2c3e50; margin-bottom: 10px;">🆔 Identity Information</h4>
+          <ul style="margin: 0; padding-left: 20px;">
+            <li><strong>Full Name:</strong> {{identityData.firstName}} {{identityData.lastName}}</li>
+            {{#if identityData.birthDate}}<li><strong>Date of Birth:</strong> {{identityData.birthDate}}</li>{{/if}}
+            {{#if identityData.documentType}}<li><strong>ID Document Type:</strong> {{identityData.documentType}}</li>{{/if}}
+            {{#if identityData.documentNumber}}<li><strong>ID Document Number:</strong> {{identityData.documentNumber}}</li>{{/if}}
+            {{#if identityData.gender}}<li><strong>Gender:</strong> {{identityData.gender}}</li>{{/if}}
+          </ul>
+        </div>
+        {{/if}}
+
+        {{#if educationData}}
+        <div style="margin-bottom: 20px;">
+          <h4 style="color: #2c3e50; margin-bottom: 10px;">🎓 Education Information</h4>
+          <ul style="margin: 0; padding-left: 20px;">
+            <li><strong>Education Level:</strong> {{educationData.level}}</li>
+            {{#if educationData.institution}}<li><strong>Institution:</strong> {{educationData.institution}}</li>{{/if}}
+            {{#if educationData.course}}<li><strong>Course:</strong> {{educationData.course}}</li>{{/if}}
+            {{#if educationData.graduationYear}}<li><strong>Graduation Year:</strong> {{educationData.graduationYear}}</li>{{/if}}
+            {{#if educationData.degree}}<li><strong>Degree:</strong> {{educationData.degree}}</li>{{/if}}
+            {{#if educationData.registrationNumber}}<li><strong>Registration Number:</strong> {{educationData.registrationNumber}}</li>{{/if}}
+          </ul>
+        </div>
+        {{/if}}
+      </div>
+
+      <div style="background-color: #e8f4f8; border: 1px solid #bee5eb; padding: 15px; margin: 20px 0; border-radius: 5px;">
+        <h4>What happens next?</h4>
+        <p>Our administrators will review your registration and approve your account within 1-2 business days. You will receive an email notification once your account status changes.</p>
+      </div>
+
+      <p><strong>Important:</strong> You will not be able to access OSOT services until your account is approved by an administrator.</p>
+
+      <p>If you have any questions or concerns, please contact our support team.</p>
+
+      <hr style="margin: 30px 0;" />
+      <p style="color: #666; font-size: 12px;">
+        This is an automated message from OSOT Registration System. Please do not reply to this email.
+      </p>
+    </div>
+  </body>
+</html>

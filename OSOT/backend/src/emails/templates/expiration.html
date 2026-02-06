@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Expired - OSOT</title>
+  </head>
+  <body>
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h2>❌ Registration Session Expired</h2>
+      <p>Hello,</p>
+      <p>
+        We're writing to inform you that your OSOT registration session has expired
+        without email confirmation.
+      </p>
+      <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 20px; margin: 20px 0; border-radius: 5px;">
+        <h3 style="color: #721c24; margin-top: 0;">⏰ Session Details</h3>
+        <ul style="color: #721c24; margin-bottom: 0;">
+          <li><strong>Email:</strong> {{email}}</li>
+          <li><strong>Registration Date:</strong> {{registrationDate}}</li>
+          <li><strong>Expired:</strong> {{expiredDate}}</li>
+          <li><strong>Confirmation Attempts:</strong> {{tokenAttempts}}/{{maxTokenAttempts}}</li>
+        </ul>
+      </div>
+      <div style="background-color: #d1ecf1; border: 1px solid #bee5eb; padding: 20px; margin: 20px 0; border-radius: 5px;">
+        <h3 style="color: #0c5460; margin-top: 0;">🔄 What happens next?</h3>
+        <p style="color: #0c5460; margin-bottom: 0;">
+          Your registration data has been securely removed from our temporary storage.
+          If you still wish to register with OSOT, you'll need to start the registration process again.
+        </p>
+      </div>
+      <p><strong>To restart your registration:</strong></p>
+      <ol>
+        <li>Visit our registration page</li>
+        <li>Complete all registration sections again</li>
+        <li>Confirm your email address within 24 hours</li>
+        <li>Complete the registration process</li>
+      </ol>
+      <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; margin: 20px 0; border-radius: 5px;">
+        <p style="color: #856404; margin-bottom: 0;">
+          <strong>💡 Tip:</strong> To avoid future expirations, make sure to check
+          your email (including spam folder) and confirm within 24 hours of registration.
+        </p>
+      </div>
+      <p>
+        If you have any questions or need assistance, please contact our support team.
+      </p>
+      <p>
+        We apologize for any inconvenience and hope to see you register again soon.
+      </p>
+      <hr style="margin: 30px 0;" />
+      <p style="color: #666; font-size: 12px;">
+        This is an automated notification from OSOT Registration System.<br />
+        This email was sent because your registration session expired without confirmation.
+      </p>
+    </div>
+  </body>
+</html>

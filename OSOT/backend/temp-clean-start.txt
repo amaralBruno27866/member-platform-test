@@ -1,0 +1,821 @@
+/**
+ * Account Orchestrator Service
+ *
+ * Main service that coordinates the complete user registration workflow.
+ * This service manages the sequential creation of entities and session lifecycle.
+ */
+
+import { Injectable, Logger } from '@nestjs/common';
+import { v4 as uuidv4 } from 'uuid';
+import {
+  CompleteUserRegistrationDto,
+  RegistrationState,
+  IAccountOrchestrator,
+  OrchestratorResponseDto,
+  OrchestratorEventService,
+} from '../index';
+import { OrchestratorRequestDto } from '../dtos/orchestrator-request.dto';
+import { SessionMapper } from '../mappers/session.mappers';
+import { OrchestratorRepository } from '../repositories/orchestrator.repository';
+import { OrchestratorValidationService } from '../validators/orchestrator-validation.service';
+import { OrchestratorEmailWorkflowService } from './orchestrator-email-workflow.service';
+import { ORCHESTRATOR_CONSTANTS } from '../constants/orchestrator.constants';
+
+// Entity Services for Account Integration
+import { AccountCrudService } from '../../../user-account/account/services/account-crud.service';
+import { AddressCrudService } from '../../../user-account/address/services/address-crud.service';
+import { ContactCrudService } from '../../../user-account/contact/services/contact-crud.service';
+import { IdentityCrudService } from '../../../user-account/identity/services/identity-crud.service';
+import { OtEducationCrudService } from '../../../user-account/ot-education/services/ot-education-crud.service';
+import { OtaEducationCrudService } from '../../../user-account/ota-education/services/ota-education-crud.service';
+import { ManagementCrudService } from '../../../user-account/management/services/management-crud.service';
+
+// Entity DTOs for Account Integration
+import { CreateAccountDto } from '../../../user-account/account/dtos/create-account.dto';
+import { CreateAddressForAccountDto } from '../../../user-account/address/dtos/create-address-for-account.dto';
+import { CreateContactForAccountDto } from '../../../user-account/contact/dtos/create-contact-for-account.dto';
+import { CreateIdentityForAccountDto } from '../../../user-account/identity/dtos/create-identity-for-account.dto';
+import { CreateOtEducationForAccountDto } from '../../../user-account/ot-education/dtos/create-ot-education-for-account.dto';
+import { CreateOtaEducationForAccountDto } from '../../../user-account/ota-education/dtos/create-ota-education-for-account.dto';
+import { CreateManagementForAccountDto } from '../../../user-account/management/dtos/create-management-for-account.dto';
+
+// Entity Response DTOs
+import { AccountResponseDto } from '../../../user-account/account/dtos/account-response.dto';
+
+// Enums
+import { AccountGroup } from '../../../../common/enums/account-group.enum';
+
+@Injectable()
+export class AccountOrchestratorService implements IAccountOrchestrator {
+  private readonly logger = new Logger(AccountOrchestratorService.name);
+
+  constructor(
+    private readonly orchestratorRepository: OrchestratorRepository,
+    private readonly validationService: OrchestratorValidationService,
+    private readonly eventService: OrchestratorEventService,
+    private readonly emailWorkflowService: OrchestratorEmailWorkflowService,
+    // Entity Services for Sequential Creation
+    private readonly accountCrudService: AccountCrudService,
+    private readonly addressCrudService: AddressCrudService,
+    private readonly contactCrudService: ContactCrudService,
+    private readonly identityCrudService: IdentityCrudService,
+    private readonly otEducationCrudService: OtEducationCrudService,
+    private readonly otaEducationCrudService: OtaEducationCrudService,
+    private readonly managementCrudService: ManagementCrudService,
+  ) {}
+
+  /**
+   * Initiate the complete user registration process
+   *
+   * This is the main entry point for user registration. It:
+   * 1. Validates the complete registration data
+   * 2. Creates a session in Redis
+   * 3. Returns session information for tracking
+   *
+   * NOTE: Email verification and admin approval will be added later
+   */
+  async initiateRegistration(
+    data: CompleteUserRegistrationDto,
+  ): Promise<OrchestratorResponseDto> {
+    const startTime = Date.now();
+    let sessionId: string | undefined;
+
+    try {
+      this.logger.log('🚀 Initiating user registration process...');
+
+      // 1. Generate unique session ID
+      sessionId = this.generateSessionId();
+      this.logger.debug(`Generated session ID: ${sessionId}`);
+
+      // Emit registration initiated event
+      this.eventService.emitRegistrationInitiated({
+        sessionId,
+        timestamp: new Date(),
+        email: data.account?.osot_email || 'unknown',
+        firstName: data.account?.osot_first_name || 'unknown',
+        lastName: data.account?.osot_last_name || 'unknown',
+        educationType: data.educationType,
+        expiresAt: new Date(
+          Date.now() +
+            ORCHESTRATOR_CONSTANTS.TIMEOUTS.REGISTRATION_SESSION_TTL * 1000,
+        ),
+      });
+
+      // 2. Validate complete registration data
+      const validationStartTime = Date.now();
+      await this.validateRegistrationData(data, sessionId);
+      const validationDuration = Date.now() - validationStartTime;
+
+      // Emit validation success event
+      this.eventService.emitRegistrationValidated({
+        sessionId,
+        timestamp: new Date(),
+        isValid: true,
+        validationDuration,
+      });
+
+      this.logger.debug('✅ Registration data validation passed');
+
+      // 3. Create session with expiration
+      const expiresAt = new Date(
+        Date.now() +
+          ORCHESTRATOR_CONSTANTS.TIMEOUTS.REGISTRATION_SESSION_TTL * 1000,
+      );
+
+      const session = SessionMapper.toInitialSession(
+        sessionId,
+        data,
+        expiresAt,
+      );
+
+      // 4. Store session in Redis
+      const createdSession =
+        await this.orchestratorRepository.createSession(session);
+      this.logger.log(`✅ Session created successfully: ${sessionId}`);
+
+      // Emit registration staged event
+      this.eventService.emitRegistrationStaged({
+        sessionId,
+        timestamp: new Date(),
+        email: data.account?.osot_email || 'unknown',
+        status: createdSession.status,
+        progressPercentage: createdSession.progress.progressPercentage,
+        expiresAt: new Date(createdSession.expiresAt),
+      });
+
+      // 5. Prepare response
+      const response: OrchestratorResponseDto = {
+        success: true,
+        message: 'Registration initiated successfully. Session created.',
+        sessionId: createdSession.sessionId,
+        status: createdSession.status,
+        progress: {
+          percentage: createdSession.progress.progressPercentage,
+          currentStep: createdSession.progress.currentStep,
+          completedEntities: createdSession.progress.completedEntities,
+          failedEntities: createdSession.progress.failedEntities,
+          pendingEntities: createdSession.progress.pendingEntities,
+        },
+        timestamps: {
+          createdAt: createdSession.createdAt,
+          updatedAt: createdSession.updatedAt,
+          expiresAt: createdSession.expiresAt,
+        },
+        nextSteps: this.getNextSteps(createdSession.status),
+      };
+
+      this.logger.log(
+        `🎯 Registration initiation completed for session: ${sessionId}`,
+      );
+      return response;
+    } catch (error: any) {
+      this.logger.error('❌ Failed to initiate registration:', error);
+
+      // Emit validation failed event if we have a sessionId
+      if (sessionId) {
+        this.eventService.emitRegistrationValidated({
+          sessionId,
+          timestamp: new Date(),
+          isValid: false,
+          errors: [String(error)],
+          validationDuration: Date.now() - startTime,
+        });
+
+        // Emit registration failed event
+        this.eventService.emitRegistrationFailed({
+          sessionId,
+          timestamp: new Date(),
+          email: data.account?.osot_email || 'unknown',
+          error: String(error),
+          errorCode: 'REGISTRATION_INITIATION_FAILED',
+          stage: 'initiation',
+          totalDuration: Date.now() - startTime,
+        });
+      }
+
+      return {
+        success: false,
+        message: `Registration initiation failed: ${String(error)}`,
+        error: {
+          code: 'REGISTRATION_INITIATION_FAILED',
+          message: String(error),
+          timestamp: new Date().toISOString(),
+        },
+      };
+    }
+  }
+
+  /**
+   * Get registration status and progress
+   */
+  async getRegistrationStatus(
+    sessionId: string,
+  ): Promise<OrchestratorResponseDto> {
+    try {
+      this.logger.log(
+        `📊 Getting registration status for session: ${sessionId}`,
+      );
+
+      const session = await this.orchestratorRepository.getSession(sessionId);
+
+      if (!session) {
+        return {
+          success: false,
+          message: 'Session not found or expired',
+          error: {
+            code: 'SESSION_NOT_FOUND',
+            message: 'The registration session was not found or has expired',
+            timestamp: new Date().toISOString(),
+          },
+        };
+      }
+
+      return {
+        success: true,
+        message: 'Session status retrieved successfully',
+        sessionId: session.sessionId,
+        status: session.status,
+        progress: {
+          percentage: session.progress.progressPercentage,
+          currentStep: session.progress.currentStep,
+          completedEntities: session.progress.completedEntities,
+          failedEntities: session.progress.failedEntities,
+          pendingEntities: session.progress.pendingEntities,
+        },
+        timestamps: {
+          createdAt: session.createdAt,
+          updatedAt: session.updatedAt,
+          expiresAt: session.expiresAt,
+        },
+        lastError: session.lastError,
+        nextSteps: this.getNextSteps(session.status),
+      };
+    } catch (error: any) {
+      this.logger.error(
+        `❌ Failed to get status for session ${sessionId}:`,
+        error,
+      );
+
+      return {
+        success: false,
+        message: `Failed to retrieve session status: ${String(error)}`,
+        error: {
+          code: 'STATUS_RETRIEVAL_FAILED',
+          message: String(error),
+          timestamp: new Date().toISOString(),
+        },
+      };
+    }
+  }
+
+  // ========================================
+  // PRIVATE HELPER METHODS
+  // ========================================
+
+  /**
+   * Generate unique session ID
+   */
+  private generateSessionId(): string {
+    const timestamp = Date.now().toString(36);
+    const randomPart = uuidv4().replace(/-/g, '').slice(0, 8);
+    return `reg_${timestamp}_${randomPart}`;
+  }
+
+  /**
+   * Validate registration data using comprehensive validation service
+   */
+  private async validateRegistrationData(
+    data: CompleteUserRegistrationDto,
+    sessionId: string,
+  ): Promise<void> {
+    // Disable unsafe assignment warnings for DTO mapping
+    // This is necessary because we're mapping between different DTO structures
+    /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+    /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
+    // Helper function to safely get property
+    const safeGet = (obj: any, key: string): any => {
+      return obj && typeof obj === 'object' && key in obj
+        ? obj[key]
+        : undefined;
+    };
+
+    // Convert CompleteUserRegistrationDto to OrchestratorRequestDto format
+    const requestData: OrchestratorRequestDto = {
+      accountData: data.account
+        ? {
+            email: safeGet(data.account, 'osot_email'),
+            firstName: safeGet(data.account, 'osot_first_name'),
+            lastName: safeGet(data.account, 'osot_last_name'),
+            ...data.account,
+          }
+        : undefined,
+      addressData: data.address
+        ? {
+            country: safeGet(data.address, 'osot_country'),
+            city: safeGet(data.address, 'osot_city'),
+            postalCode: safeGet(data.address, 'osot_postal_code'),
+            street: safeGet(data.address, 'osot_street_address'),
+            ...data.address,
+          }
+        : undefined,
+      contactData: data.contact
+        ? {
+            email: safeGet(data.contact, 'osot_email'),
+            phone: safeGet(data.contact, 'osot_phone'),
+            ...data.contact,
+          }
+        : undefined,
+      identityData: data.identity
+        ? {
+            firstName: safeGet(data.identity, 'osot_first_name'),
+            lastName: safeGet(data.identity, 'osot_last_name'),
+            documentType: safeGet(data.identity, 'osot_id_type'),
+            documentNumber: safeGet(data.identity, 'osot_id_number'),
+            birthDate: safeGet(data.identity, 'osot_date_of_birth'),
+            ...data.identity,
+          }
+        : undefined,
+      educationData:
+        data.educationType === 'ot' && data.otEducation
+          ? {
+              level: 'OT',
+              institution: safeGet(data.otEducation, 'osot_school_name'),
+              course: 'Occupational Therapy',
+              ...data.otEducation,
+            }
+          : data.educationType === 'ota' && data.otaEducation
+            ? {
+                level: 'OTA',
+                institution: safeGet(data.otaEducation, 'osot_school_name'),
+                course: 'Occupational Therapy Assistant',
+                ...data.otaEducation,
+              }
+            : undefined,
+      managementData: data.management
+        ? {
+            position: 'Member',
+            department: 'General',
+            startDate: new Date().toISOString(),
+            ...data.management,
+          }
+        : undefined,
+    };
+
+    // Run comprehensive validation
+    const validationResult =
+      await this.validationService.validateCompleteRegistration(requestData);
+
+    // Check if validation passed
+    if (!validationResult.isValid) {
+      const errorMessage = validationResult.errors.join('; ');
+      this.logger.error(
+        `❌ Validation failed for session ${sessionId}: ${errorMessage}`,
+      );
+      throw new Error(`Validation failed: ${errorMessage}`);
+    }
+
+    // Log warnings if any
+    if (validationResult.warnings.length > 0) {
+      const warningMessage = validationResult.warnings.join('; ');
+      this.logger.warn(
+        `⚠️ Validation warnings for session ${sessionId}: ${warningMessage}`,
+      );
+    }
+
+    this.logger.debug(
+      `✅ Comprehensive validation passed for session ${sessionId}`,
+    );
+  }
+
+  /**
+   * Get next steps based on current registration status
+   */
+  private getNextSteps(status: RegistrationState): string[] {
+    switch (status) {
+      case RegistrationState.STAGED:
+        return [
+          'Data validation completed',
+          'Session created in system',
+          'Ready for next phase of processing',
+        ];
+      case RegistrationState.PENDING_APPROVAL:
+        return [
+          'Administrator review in progress',
+          'Approval notification will be sent via email',
+          'Processing may take 1-2 business days',
+        ];
+      case RegistrationState.APPROVED:
+        return [
+          'Registration approved by administrator',
+          'Account creation process will begin',
+          'Entity creation in progress',
+        ];
+      case RegistrationState.COMPLETED:
+        return [
+          'Registration completed successfully',
+          'All account entities created',
+          'You can now access the system',
+        ];
+      case RegistrationState.FAILED:
+        return [
+          'Registration encountered an error',
+          'Check error details for more information',
+          'Contact support if the issue persists',
+        ];
+      case RegistrationState.REJECTED:
+        return [
+          'Registration was rejected by administrator',
+          'Check email for rejection reason',
+          'Contact support for assistance',
+        ];
+      default:
+        return ['Processing registration...'];
+    }
+  }
+
+  // ========================================
+  // EMAIL WORKFLOW INTEGRATION METHODS
+  // ========================================
+
+  /**
+   * Initiate email verification workflow
+   *
+   * @param sessionId Registration session ID
+   * @returns Email verification initiation result
+   */
+  async initiateEmailVerification(sessionId: string) {
+    this.logger.log(
+      `Initiating email verification workflow for session: ${sessionId}`,
+    );
+
+    try {
+      // Delegate to email workflow service
+      const result =
+        await this.emailWorkflowService.initiateEmailVerification(sessionId);
+
+      this.logger.log(
+        `Email verification initiated successfully for session: ${sessionId}`,
+      );
+      return result;
+    } catch (error) {
+      this.logger.error(
+        `Failed to initiate email verification for session ${sessionId}: ${error instanceof Error ? error.message : String(error)}`,
+      );
+      throw error;
+    }
+  }
+
+  /**
+   * Process email verification token (Interface Compatibility)
+   *
+   * @param sessionId Registration session ID
+   * @param verificationToken Token from email link
+   * @returns Orchestrator response DTO
+   */
+  async verifyEmail(
+    sessionId: string,
+    verificationToken: string,
+  ): Promise<OrchestratorResponseDto> {
+    this.logger.log(`Processing email verification for session: ${sessionId}`);
+
+    try {
+      // Delegate to email workflow service
+      const emailResult = await this.emailWorkflowService.verifyEmailToken(
+        sessionId,
+        verificationToken,
+      );
+
+      // Convert to OrchestratorResponseDto format
+      const orchestratorResponse: OrchestratorResponseDto = {
+        success: emailResult.success,
+        message: emailResult.message,
+        sessionId: emailResult.sessionId,
+        status:
+          emailResult.nextStep === 'admin_approval'
+            ? RegistrationState.EMAIL_VERIFIED
+            : RegistrationState.FAILED,
+        timestamps: {
+          createdAt: emailResult.timestamp.toISOString(),
+          updatedAt: emailResult.timestamp.toISOString(),
+          expiresAt: new Date(Date.now() + 86400000).toISOString(), // 24h from now
+        },
+        nextSteps: [emailResult.nextStep],
+      };
+
+      if (!emailResult.success && emailResult.errors) {
+        orchestratorResponse.error = {
+          code: 'EMAIL_VERIFICATION_FAILED',
+          message: emailResult.errors.join('; '),
+          timestamp: emailResult.timestamp.toISOString(),
+        };
+      }
+
+      this.logger.log(
+        `Email verification processed for session: ${sessionId}, success: ${emailResult.success}`,
+      );
+      return orchestratorResponse;
+    } catch (error) {
+      this.logger.error(
+        `Failed to verify email for session ${sessionId}: ${error instanceof Error ? error.message : String(error)}`,
+      );
+      throw error;
+    }
+  }
+
+  /**
+   * Process admin approval/rejection
+   *
+   * @param sessionId Registration session ID
+   * @param action Approve or reject action
+   * @param adminId Administrator identifier
+   * @param reason Optional reason for action
+   * @returns Admin approval result
+   */
+  async processAdminApproval(
+    sessionId: string,
+    action: 'approve' | 'reject',
+    adminId: string,
+    reason?: string,
+  ) {
+    this.logger.log(`Processing admin ${action} for session: ${sessionId}`);
+
+    try {
+      // Delegate to email workflow service
+      const result = await this.emailWorkflowService.processAdminApproval(
+        sessionId,
+        action,
+        adminId,
+        reason,
+      );
+
+      // If approved, we can proceed to entity creation
+      if (result.success && action === 'approve') {
+        this.logger.log(
+          `Registration approved for session: ${sessionId}. Ready for entity creation.`,
+        );
+        // TODO: Trigger entity creation workflow
+      }
+
+      this.logger.log(
+        `Admin ${action} processed for session: ${sessionId}, success: ${result.success}`,
+      );
+      return result;
+    } catch (error) {
+      this.logger.error(
+        `Failed to process admin approval for session ${sessionId}: ${error instanceof Error ? error.message : String(error)}`,
+      );
+      throw error;
+    }
+  }
+
+  /**
+   * Resend verification email
+   *
+   * @param sessionId Registration session ID
+   * @returns Email resend result
+   */
+  async resendVerificationEmail(sessionId: string) {
+    this.logger.log(`Resending verification email for session: ${sessionId}`);
+
+    try {
+      // Delegate to email workflow service
+      const result =
+        await this.emailWorkflowService.resendVerificationEmail(sessionId);
+
+      this.logger.log(
+        `Verification email resend for session: ${sessionId}, success: ${result.success}`,
+      );
+      return result;
+    } catch (error) {
+      this.logger.error(
+        `Failed to resend verification email for session ${sessionId}: ${error instanceof Error ? error.message : String(error)}`,
+      );
+      throw error;
+    }
+  }
+
+  /**
+   * Get email workflow status
+   *
+   * @param sessionId Registration session ID
+   * @returns Current email workflow status
+   */
+  async getEmailWorkflowStatus(sessionId: string) {
+    this.logger.log(`Getting email workflow status for session: ${sessionId}`);
+
+    try {
+      // Delegate to email workflow service
+      const result =
+        await this.emailWorkflowService.getEmailWorkflowStatus(sessionId);
+
+      this.logger.log(
+        `Email workflow status retrieved for session: ${sessionId}`,
+      );
+      return result;
+    } catch (error) {
+      this.logger.error(
+        `Failed to get email workflow status for session ${sessionId}: ${error instanceof Error ? error.message : String(error)}`,
+      );
+      throw error;
+    }
+  }
+
+  /**
+   * Enhanced initiate registration with email workflow option
+   *
+   * @param data Complete registration data
+   * @param skipEmailVerification Whether to skip email verification
+   * @returns Registration response with email workflow status
+   */
+  async initiateRegistrationWithEmailWorkflow(
+    data: CompleteUserRegistrationDto,
+    skipEmailVerification = false,
+  ): Promise<OrchestratorResponseDto> {
+    this.logger.log('🚀 Initiating registration with email workflow...');
+
+    try {
+      // 1. First, complete the standard registration initiation
+      const standardResult = await this.initiateRegistration(data);
+
+      if (!standardResult.success) {
+        return standardResult;
+      }
+
+      // 2. If email verification is not skipped, initiate email workflow
+      if (!skipEmailVerification && standardResult.sessionId) {
+        try {
+          await this.initiateEmailVerification(standardResult.sessionId);
+
+          // Enhance response with email workflow information
+          return {
+            ...standardResult,
+            message:
+              'Registration initiated successfully. Email verification sent.',
+            nextSteps: [
+              'Check your email for verification link',
+              'Click the verification link to proceed',
+              'Wait for admin approval after email verification',
+            ],
+          };
+        } catch (emailError) {
+          this.logger.warn(
+            `Email workflow initiation failed, but registration was staged: ${emailError instanceof Error ? emailError.message : String(emailError)}`,
+          );
+
+          // Return standard result with warning about email
+          return {
+            ...standardResult,
+            message:
+              'Registration initiated successfully, but email verification could not be sent.',
+            nextSteps: [
+              'Registration data has been staged',
+              'Contact support for assistance with email verification',
+            ],
+          };
+        }
+      }
+
+      // 3. Return standard result if email verification was skipped
+      return standardResult;
+    } catch (error) {
+      this.logger.error(
+        `Failed to initiate registration with email workflow: ${error instanceof Error ? error.message : String(error)}`,
+      );
+      throw error;
+    }
+  }
+
+  // ========================================
+  // ENTITY CREATION WORKFLOW (PHASE 3)
+  // ========================================
+
+  /**
+   * Execute the complete entity creation workflow
+   *
+   * PHASE 3: Entity Creation based on CSV field analysis
+   * 1. Create Account first (to get osot_account_id, osot_table_accountid, osot_account_group)
+   * 2. Use Account data to create dependent entities with proper relationships
+   *
+   * Basic implementation focusing on core Account creation workflow.
+   */
+  async executeEntityCreation(
+    sessionId: string,
+  ): Promise<OrchestratorResponseDto> {
+    const startTime = Date.now();
+    let createdEntities: string[] = [];
+    let failedEntities: string[] = [];
+
+    try {
+      this.logger.log(
+        `🏗️ Starting entity creation workflow for session: ${sessionId}`,
+      );
+
+      // 1. Get session data
+      const session = await this.orchestratorRepository.getSession(sessionId);
+      if (!session) {
+        return {
+          success: false,
+          message: 'Session not found or expired',
+          error: {
+            code: 'SESSION_NOT_FOUND',
+            message: 'The registration session was not found or has expired',
+            timestamp: new Date().toISOString(),
+          },
+        };
+      }
+
+      // 2. Validate session is in correct state
+      if (session.status !== RegistrationState.APPROVED) {
+        return {
+          success: false,
+          message: 'Session is not in approved state for entity creation',
+          error: {
+            code: 'INVALID_SESSION_STATE',
+            message: `Session must be approved before entity creation. Current state: ${session.status}`,
+            timestamp: new Date().toISOString(),
+          },
+        };
+      }
+
+      // 3. Update session to processing state
+      await this.updateSessionStatus(sessionId, RegistrationState.PROCESSING);
+
+      // 4. Execute basic entity creation (Account only for now)
+      const creationResult = await this.createBasicAccountEntity(
+        session.userData,
+        sessionId,
+      );
+
+      if (creationResult.success) {
+        // 5. Update session to completed
+        await this.updateSessionStatus(sessionId, RegistrationState.COMPLETED);
+
+        this.logger.log(
+          `✅ Basic entity creation completed for session: ${sessionId}`,
+          {
+            totalDuration: Date.now() - startTime,
+            accountId: creationResult.accountId,
+          },
+        );
+
+        return {
+          success: true,
+          message: 'Account entity created successfully',
+          sessionId,
+          status: RegistrationState.COMPLETED,
+          progress: {
+            percentage: 100,
+            currentStep: 'account',
+            completedEntities: ['Account'],
+            failedEntities: [],
+            pendingEntities: [],
+          },
+          timestamps: {
+            createdAt: session.createdAt,
+            updatedAt: new Date().toISOString(),
+            expiresAt: session.expiresAt,
+          },
+          nextSteps: [
+            'Registration completed successfully',
+            'Account entity created',
+            'You can now access the system',
+            `Account ID: ${creationResult.accountId}`,
+          ],
+        };
+      } else {
+        // 6. Update session to failed
+        await this.updateSessionStatus(sessionId, RegistrationState.FAILED);
+
+        return {
+          success: false,
+          message: 'Entity creation failed',
+          sessionId,
+          status: RegistrationState.FAILED,
+          error: {
+            code: 'ENTITY_CREATION_FAILED',
+            message:
+              creationResult.error || 'Unknown error during entity creation',
+            timestamp: new Date().toISOString(),
+          },
+        };
+      }
+    } catch (error) {
+      this.logger.error(
+        `💥 Critical error in entity creation for session ${sessionId}:`,
+        error,
+      );
+
+      // Update session to failed
+      await this.updateSessionStatus(sessionId, RegistrationState.FAILED);
+
+      return {
+        success: false,
+        message: `Critical error during entity creation: ${error instanceof Error ? error.message : String(error)}`,
+        sessionId,
+        status: RegistrationState.FAILED,
+        error: {
+          code: 'CRITICAL_ENTITY_CREATION_ERROR',
+          message: error instanceof Error ? error.message : String(error),
+          timestamp: new Date().toISOString(),
+        },

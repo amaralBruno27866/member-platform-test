@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSOT Membership Certificate</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 40px 20px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .certificate-container {
+      max-width: 1000px;
+      background: white;
+      border: 20px solid #2c3e50;
+      border-image: linear-gradient(45deg, #3498db, #2c3e50) 1;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      padding: 60px 80px;
+      position: relative;
+    }
+
+    /* Decorative corners */
+    .certificate-container::before,
+    .certificate-container::after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border: 3px solid #3498db;
+    }
+
+    .certificate-container::before {
+      top: 20px;
+      left: 20px;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .certificate-container::after {
+      bottom: 20px;
+      right: 20px;
+      border-left: none;
+      border-top: none;
+    }
+
+    /* Header with logo */
+    .certificate-header {
+      text-align: center;
+      margin-bottom: 40px;
+      border-bottom: 3px double #3498db;
+      padding-bottom: 30px;
+    }
+
+    .organization-logo {
+      max-width: 200px;
+      max-height: 100px;
+      margin-bottom: 20px;
+      object-fit: contain;
+    }
+
+    .organization-name {
+      font-size: 28px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .certificate-title {
+      font-size: 48px;
+      font-weight: bold;
+      color: #3498db;
+      margin: 30px 0;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .certificate-subtitle {
+      font-size: 18px;
+      color: #7f8c8d;
+      font-style: italic;
+      margin-bottom: 40px;
+    }
+
+    /* Main content */
+    .certificate-body {
+      text-align: center;
+      margin: 40px 0;
+      line-height: 2;
+    }
+
+    .certificate-text {
+      font-size: 20px;
+      color: #34495e;
+      margin-bottom: 30px;
+    }
+
+    .member-name {
+      font-size: 36px;
+      font-weight: bold;
+      color: #2c3e50;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-bottom: 3px solid #3498db;
+      display: inline-block;
+      padding: 10px 40px;
+      margin: 20px 0;
+    }
+
+    .member-id {
+      font-size: 24px;
+      color: #7f8c8d;
+      font-family: 'Courier New', monospace;
+      margin: 20px 0;
+      background: #ecf0f1;
+      padding: 10px 20px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    /* Details section */
+    .certificate-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 40px 0;
+      text-align: left;
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 10px;
+      border: 2px solid #e9ecef;
+    }
+
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-label {
+      font-size: 14px;
+      color: #7f8c8d;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .detail-value {
+      font-size: 18px;
+      color: #2c3e50;
+      font-weight: bold;
+    }
+
+    /* Footer with signatures */
+    .certificate-footer {
+      margin-top: 60px;
+      border-top: 3px double #3498db;
+      padding-top: 40px;
+    }
+
+    .signatures {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      margin-top: 40px;
+    }
+
+    .signature-block {
+      text-align: center;
+    }
+
+    .signature-line {
+      border-top: 2px solid #2c3e50;
+      margin: 20px auto 10px;
+      width: 250px;
+    }
+
+    .signature-name {
+      font-size: 16px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 5px;
+    }
+
+    .signature-title {
+      font-size: 14px;
+      color: #7f8c8d;
+      font-style: italic;
+    }
+
+    /* QR Code section */
+    .qr-section {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #ecf0f1;
+      border-radius: 10px;
+    }
+
+    .qr-code {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto;
+      background: white;
+      padding: 10px;
+      border: 2px solid #3498db;
+      border-radius: 5px;
+    }
+
+    .qr-label {
+      font-size: 12px;
+      color: #7f8c8d;
+      margin-top: 10px;
+    }
+
+    .verification-code {
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      color: #2c3e50;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .certificate-container {
+        border: 20px solid #2c3e50;
+        box-shadow: none;
+        max-width: 100%;
+        page-break-inside: avoid;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .certificate-container {
+        padding: 40px 30px;
+        border-width: 10px;
+      }
+
+      .certificate-title {
+        font-size: 32px;
+      }
+
+      .member-name {
+        font-size: 24px;
+      }
+
+      .certificate-details {
+        grid-template-columns: 1fr;
+      }
+
+      .signatures {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="certificate-container">
+    <!-- Header -->
+    <div class="certificate-header">
+      {{#if organizationLogo}}
+      <img src="{{organizationLogo}}" alt="{{organizationName}} Logo" class="organization-logo">
+      {{/if}}
+      <div class="organization-name">{{organizationName}}</div>
+    </div>
+
+    <!-- Title -->
+    <div class="certificate-title">Certificate of Membership</div>
+    <div class="certificate-subtitle">This is to certify that</div>
+
+    <!-- Body -->
+    <div class="certificate-body">
+      <div class="member-name">{{memberFirstName}} {{memberLastName}}</div>
+      
+      <div class="certificate-text">
+        is a registered member in good standing of the<br>
+        <strong>{{organizationName}}</strong>
+      </div>
+
+      <div class="member-id">Member ID: {{memberBusinessId}}</div>
+    </div>
+
+    <!-- Details -->
+    <div class="certificate-details">
+      <div class="detail-item">
+        <span class="detail-label">Membership Category</span>
+        <span class="detail-value">{{categoryName}}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Membership Year</span>
+        <span class="detail-value">{{membershipYear}}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Issue Date</span>
+        <span class="detail-value">{{issueDate}}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Valid Until</span>
+        <span class="detail-value">{{expiryDate}}</span>
+      </div>
+      {{#if accountGroup}}
+      <div class="detail-item">
+        <span class="detail-label">Professional Designation</span>
+        <span class="detail-value">{{accountGroup}}</span>
+      </div>
+      {{/if}}
+      <div class="detail-item">
+        <span class="detail-label">Status</span>
+        <span class="detail-value" style="color: #27ae60;">Active</span>
+      </div>
+    </div>
+
+    <!-- Footer with signatures -->
+    <div class="certificate-footer">
+      <div class="signatures">
+        <div class="signature-block">
+          <div class="signature-line"></div>
+          <div class="signature-name">Executive Director</div>
+          <div class="signature-title">{{organizationName}}</div>
+        </div>
+        <div class="signature-block">
+          <div class="signature-line"></div>
+          <div class="signature-name">Registrar</div>
+          <div class="signature-title">{{organizationName}}</div>
+        </div>
+      </div>
+
+      <!-- QR Code for verification -->
+      <div class="qr-section">
+        <div class="qr-code">
+          <!-- QR Code will be generated here or replaced with actual image -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <rect width="100" height="100" fill="white"/>
+            <text x="50" y="50" text-anchor="middle" fill="#3498db" font-size="12">QR Code</text>
+          </svg>
+        </div>
+        <div class="qr-label">Scan to verify authenticity</div>
+        <div class="verification-code">Certificate ID: {{certificateId}}</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

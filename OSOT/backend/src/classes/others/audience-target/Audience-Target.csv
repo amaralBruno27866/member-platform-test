@@ -1,0 +1,44 @@
+Display name,Description,Data type,Format,Behavior,Required,Searchable,Allow form fill assistance,Choices,Related table,Selecting multiple choices is allowed,Sync with global choice?,Sync this choice with,Compare with,Enum,Default choice,Autonumber type,Prefix,Minimum number of digits,Seed value,Preview,Schema name,Logical name,Relationship name,Minimum value,Maximum value,Decimal Places,Precision source,Time zone adjustment,Maximum character count,IME mode,Enabel auditing,Sortable
+Target_ID,,Autonumber,,,Business required,TRUE,TRUE,,,,,,,,,String prefixed number,osot-tgt,7,1,osot-tgt-0000001,osot_Target,osot_target,,,,,,,850,Disable,TRUE,TRUE
+Table_Audience_Target,Unique identifier for entity instances,Unique identifier,,,System required,TRUE,FALSE,,,,,,,,,,,,,,osot_Table_Audience_TargetId,osot_table_audience_targetid,,,,,,,,,FALSE,FALSE
+Table_Product,,Lookup,,,Optional,TRUE,TRUE,,Table_Product,,,,,,,,,,,,osot_Table_Product,osot_table_product,osot_Table_Audience_Target_osot_Table_Product_osot_Table_Product,,,,,,,,FALSE,FALSE
+Account_Group,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Account_Group,Table_Account,account-group.enum.ts,,,,,,,osot_Account_Group,osot_account_group,,,,,,,,,TRUE,FALSE
+Affiliate_Area,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Affiliate_Area,Table_Account_Affiliate,affiliate-areas.enum.ts,,,,,,,osot_Affiliate_Area,osot_affiliate_area,,,,,,,,,TRUE,FALSE
+Affiliate_City,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Cities,Table_Account_Affiliate,cities.enum.ts,,,,,,,osot_Affiliate_City,osot_affiliate_city,,,,,,,,,TRUE,FALSE
+Affiliate_Province,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Provinces,Table_Account_Affiliate,provinces.enum.ts,,,,,,,osot_Affiliate_Province,osot_affiliate_province,,,,,,,,,TRUE,FALSE
+Membership_City,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Cities,Table_Address,cities.enum.ts,,,,,,,osot_Membership_City,osot_membership_city,,,,,,,,,TRUE,FALSE
+Province,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Provinces,Table_Address,provinces.enum.ts,,,,,,,osot_Province,osot_province,,,,,,,,,TRUE,FALSE
+Gender,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Gender,Table_Identity,gender-choice.enum.ts,,,,,,,osot_Gender,osot_gender,,,,,,,,,TRUE,FALSE
+Indigenous_ Details,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Indigenous,Table_Identity,indigenous-detai.enum.ts,,,,,,,osot_Indigenous_Details,osot_indigenous_details,,,,,,,,,TRUE,FALSE
+Language,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Languages,Table_Identity,language-choice.enum.ts,,,,,,,osot_Language,osot_language,,,,,,,,,TRUE,FALSE
+Race,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Races,Table_Identity,race-choice.enum.ts,,,,,,,osot_Race,osot_race,,,,,,,,,TRUE,FALSE
+Eligibility_Affiliate,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Eligibility_Affiliate,Table_Membership_Category,affiliate-eligibility-enum.ts,,,,,,,osot_Eligibility_Affiliate,osot_eligibility_affiliate,,,,,,,,,TRUE,FALSE
+Membership_Category,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Categories,Table_Membership_Category,categories-enum.ts,,,,,,,osot_Membership_Category,osot_membership_category,,,,,,,,,TRUE,FALSE
+Earnings,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Hourly_Earnings,Table_Membership_Employment,hourly-earnings.enum.ts,,,,,,,osot_Earnings,osot_earnings,,,,,,,,,TRUE,FALSE
+Earnings_Self-Direct,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Hourly_Earnings,Table_Membership_Employment,hourly-earnings.enum.ts,,,,,,,osot_Earnings_SelfDirect,osot_earnings_selfdirect,,,,,,,,,TRUE,FALSE
+Earnings_Self-Indirect,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Hourly_Earnings,Table_Membership_Employment,hourly-earnings.enum.ts,,,,,,,osot_Earnings_SelfIndirect,osot_earnings_selfindirect,,,,,,,,,TRUE,FALSE
+Employment_Benefits,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Benefits,Table_Membership_Employment,benefits.enum.ts,,,,,,,osot_Employment_Benefits,osot_employment_benefits,,,,,,,,,TRUE,FALSE
+Employment_Status,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Employment_Status,Table_Membership_Employment,employment-status.enum.ts,,,,,,,osot_Employment_Status,osot_employment_status,,,,,,,,,TRUE,FALSE
+Position_Funding,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Funding,Table_Membership_Employment,funding.enum.ts,,,,,,,osot_Position_Funding,osot_position_funding,,,,,,,,,TRUE,FALSE
+Practice_Years,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Practice_Years,Table_Membership_Employment,practice-years.enum.ts,,,,,,,osot_Practice_Years,osot_practice_years,,,,,,,,,TRUE,FALSE
+Role_Description,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Role_Descriptor,Table_Membership_Employment,role-descriptor.enum.ts,,,,,,,osot_Role_Description,osot_role_description,,,,,,,,,TRUE,FALSE
+Work_Hours,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Work_Hours,Table_Membership_Employment,work-hours.enum.ts,,,,,,,osot_Work_Hours,osot_work_hours,,,,,,,,,TRUE,FALSE
+Client_Age,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Populations,Table_Membership_Practice,clients-age.enum.ts,,,,,,,osot_Client_Age,osot_client_age,,,,,,,,,TRUE,FALSE
+Practice_Area,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Practice_Area,Table_Membership_Practice,practice-area.enum.ts,,,,,,,osot_Practice_Area,osot_practice_area,,,,,,,,,TRUE,FALSE
+Practice_Services,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Practice_Services,Table_Membership_Practice,practice-service.enum.ts,,,,,,,osot_Practice_Services,osot_practice_services,,,,,,,,,TRUE,FALSE
+Practice_Settings,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Practice_Settings,Table_Membership_Practice,practice-settings.enum.ts,,,,,,,osot_Practice_Settings,osot_practice_settings,,,,,,,,,TRUE,FALSE
+Membership_Search_Tools,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Search_Tools,Table_Membership_Preference,search-tools.enum.ts,,,,,,,osot_Membership_Search_Tools,osot_membership_search_tools,,,,,,,,,TRUE,FALSE
+Practice_Promotion,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Practice_Promotion,Table_Membership_Preference,practice-promotion.enum.ts,,,,,,,osot_Practice_Promotion,osot_practice_promotion,,,,,,,,,TRUE,FALSE
+Psychotherapy_Supervision,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Psychotherapy,Table_Membership_Preference,psychotherapy-supervision.enum.ts,,,,,,,osot_Psychotherapy_Supervision,osot_psychotherapy_supervision,,,,,,,,,TRUE,FALSE
+Third_Parties,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Third_Parties,Table_Membership_Preference,third-parties.enum.ts,,,,,,,osot_Third_Parties,osot_third_parties,,,,,,,,,TRUE,FALSE
+COTO_Status,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_COTO_Status,Table_OT_Education,coto-status.enum.ts,,,,,,,osot_COTO_Status,osot_coto_status,,,,,,,,,TRUE,FALSE
+OT_Grad_Year,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Years,Table_OT_Education,graduation-year.enum.ts,,,,,,,osot_OT_Grad_Year,osot_ot_grad_year,,,,,,,,,TRUE,FALSE
+OT_University,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_OT_Universities,Table_OT_Education,ot-university.enum.ts,,,,,,,osot_OT_University,osot_ot_university,,,,,,,,,TRUE,FALSE
+OTA_Grad_Year,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_Years,Table_OTA_Education,graduation-year.enum.ts,,,,,,,osot_OTA_Grad_Year,osot_ota_grad_year,,,,,,,,,TRUE,FALSE
+OTA_College,,Choice,,Simple,Optional,TRUE,TRUE,TRUE,,TRUE,TRUE,Choices_OTA_Colleges,Table_OTA_Education,ota-college.enum.ts,,,,,,,osot_OTA_College,osot_ota_college,,,,,,,,,TRUE,FALSE
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Table Information,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Display Name,Table_Audience_Target,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Plural Name,Table_Audience_Targets,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Schema Name,osot_Table_Audience_Target,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Logical Name,osot_table_audience_target,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

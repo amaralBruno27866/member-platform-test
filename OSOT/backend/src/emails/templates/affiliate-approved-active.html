@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affiliate Application Approved - Welcome to OSOT Network</title>
+  </head>
+  <body>
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h2 style="color: #27ae60;">🎉 Your Affiliate Application Has Been Approved!</h2>
+
+      <p>Hello {{representativeName}},</p>
+
+      <p>Congratulations! We are pleased to inform you that <strong>{{organizationName}}</strong> has been approved as an official OSOT affiliate organization.</p>
+
+      <div style="background-color: #d4edda; border: 1px solid #c3e6cb; padding: 20px; margin: 20px 0; border-radius: 5px;">
+        <h3>Affiliate Partnership Details:</h3>
+        <ul>
+          <li><strong>Organization:</strong> {{organizationName}}</li>
+          <li><strong>Representative:</strong> {{representativeName}}</li>
+          <li><strong>Email:</strong> {{organizationEmail}}</li>
+          <li><strong>Service Area:</strong> {{affiliateArea}}</li>
+          <li><strong>Affiliate ID:</strong> {{affiliateId}}</li>
+          <li><strong>Approval Date:</strong> {{approvalDate}}</li>
+          <li><strong>Current Status:</strong> <span style="color: #27ae60; font-weight: bold;">Active Affiliate</span></li>
+          <li><strong>Approved By:</strong> {{approvedBy}}</li>
+        </ul>
+      </div>
+
+      {{#if approvalReason}}
+      <div style="background-color: #e8f4f8; border: 1px solid #bee5eb; padding: 15px; margin: 20px 0; border-radius: 5px;">
+        <h4>Approval Notes:</h4>
+        <p style="font-style: italic;">"{{approvalReason}}"</p>
+      </div>
+      {{/if}}
+
+      <div style="background-color: #e8f4f8; border: 1px solid #bee5eb; padding: 15px; margin: 20px 0; border-radius: 5px;">
+        <h4>What can you do now as an OSOT Affiliate?</h4>
+        <ul>
+          <li>Access your affiliate portal with your registered credentials</li>
+          <li>Participate in OSOT network events and programs</li>
+          <li>Access affiliate-exclusive resources and materials</li>
+          <li>Collaborate with other affiliate organizations</li>
+          <li>Receive updates on OSOT initiatives and opportunities</li>
+        </ul>
+
+        {{#if loginUrl}}
+        <div style="text-align: center; margin: 20px 0;">
+          <a href="{{loginUrl}}"
+             style="background-color: #27ae60; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold;">
+            Access Affiliate Portal
+          </a>
+        </div>
+        {{/if}}
+      </div>
+
+      <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; margin: 20px 0; border-radius: 5px;">
+        <h4>Next Steps:</h4>
+        <ol>
+          <li>Log in to your affiliate portal using your registered email and password</li>
+          <li>Complete your organization profile setup</li>
+          <li>Review affiliate guidelines and resources</li>
+          <li>Connect with your assigned OSOT liaison</li>
+          <li>Begin participating in affiliate programs</li>
+        </ol>
+      </div>
+
+      <div style="background-color: #f8f9fa; border: 1px solid #dee2e6; padding: 15px; margin: 20px 0; border-radius: 5px;">
+        <h4>Important Information:</h4>
+        <ul>
+          <li>Your affiliate status requires annual renewal</li>
+          <li>Please maintain current contact information in your profile</li>
+          <li>Notify us of any changes in organization leadership</li>
+          <li>Review affiliate terms and conditions in your portal</li>
+        </ul>
+      </div>
+
+      <p>Welcome to the OSOT affiliate network! We look forward to a successful partnership with {{organizationName}}.</p>
+
+      <hr style="margin: 30px 0;" />
+      <p style="color: #666; font-size: 12px;">
+        This is an automated message from OSOT Affiliate Management System.<br>
+        For questions about your affiliate partnership, please contact your assigned liaison or our support team.
+      </p>
+    </div>
+  </body>
+</html>

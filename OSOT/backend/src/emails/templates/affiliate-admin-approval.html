@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Approval Required - Affiliate Registration</title>
+  </head>
+  <body>
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <h2 style="color: #1e293b; margin-bottom: 20px;">Admin Approval Required - Affiliate Application</h2>
+
+      <p style="color: #475569; line-height: 1.6;">Hello Administrator,</p>
+
+      <p style="color: #475569; line-height: 1.6;">
+        A new affiliate organization has completed their registration and requires your review and approval. 
+        Please evaluate the application details below and choose to approve or reject the affiliate partnership.
+      </p>
+
+      <div style="background-color: #f8fafc; padding: 20px; margin: 30px 0; border-radius: 8px; border: 1px solid #e2e8f0;">
+        <h3 style="color: #334155; margin-top: 0; font-size: 16px;">Organization Information</h3>
+        <ul>
+          <li><strong>Organization Name:</strong> {{organizationName}}</li>
+          <li><strong>Representative:</strong> {{representativeName}}</li>
+          <li><strong>Job Title:</strong> {{representativeTitle}}</li>
+          <li><strong>Email:</strong> {{organizationEmail}}</li>
+          <li><strong>Phone:</strong> {{organizationPhone}}</li>
+          <li><strong>Service Area:</strong> {{affiliateAreaLabel}}</li>
+          <li><strong>Website:</strong> {{organizationWebsite}}</li>
+          <li><strong>Registration Date:</strong> {{registrationDate}}</li>
+          <li><strong>Affiliate ID:</strong> {{affiliateId}}</li>
+        </ul>
+      </div>
+
+      <div style="background-color: #eff6ff; border: 1px solid #bfdbfe; padding: 20px; margin: 30px 0; border-radius: 8px;">
+        <h3 style="color: #1e40af; margin-top: 0; font-size: 16px;">Organization Address</h3>
+        <p>
+          {{organizationAddress1}}<br>
+          {{#if organizationAddress2}}{{organizationAddress2}}<br>{{/if}}
+          {{organizationCityLabel}}, {{organizationProvinceLabel}} {{organizationPostalCode}}<br>
+          {{organizationCountryLabel}}
+        </p>
+      </div>
+
+      {{#if organizationSocialMedia}}
+      <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; margin: 30px 0; border-radius: 8px;">
+        <h3 style="color: #334155; margin-top: 0; font-size: 16px;">Social Media Presence</h3>
+        <ul>
+          {{#if organizationFacebook}}<li><strong>Facebook:</strong> {{organizationFacebook}}</li>{{/if}}
+          {{#if organizationInstagram}}<li><strong>Instagram:</strong> {{organizationInstagram}}</li>{{/if}}
+          {{#if organizationLinkedIn}}<li><strong>LinkedIn:</strong> {{organizationLinkedIn}}</li>{{/if}}
+          {{#if organizationTikTok}}<li><strong>TikTok:</strong> {{organizationTikTok}}</li>{{/if}}
+        </ul>
+      </div>
+      {{/if}}
+
+      <div style="text-align: center; margin: 40px 0;">
+        <a href="{{frontendUrl}}/admin/approve-affiliate/{{approveToken}}"
+           style="background-color: #16a34a; color: white; padding: 16px 48px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: bold; font-size: 16px; margin: 0 8px 16px 8px;">
+          ✅ Approve Organization
+        </a>
+        <a href="{{frontendUrl}}/admin/reject-affiliate/{{rejectToken}}"
+           style="background-color: #dc2626; color: white; padding: 16px 48px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: bold; font-size: 16px; margin: 0 8px 16px 8px;">
+          ❌ Reject Organization
+        </a>
+      </div>
+
+      <p style="text-align: center; color: #64748b; font-size: 14px; margin: 20px 0;">
+        Click the appropriate button above to process this affiliate application.<br>
+        You will be asked to provide a reason for your decision.<br>
+        <strong>Links expire in 7 days.</strong>
+      </p>
+
+      <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; margin: 30px 0; border-radius: 8px;">
+        <h4 style="color: #334155; margin-top: 0; font-size: 15px;">Review Checklist</h4>
+        <ul>
+          <li>☐ Verify organization legitimacy and credentials</li>
+          <li>☐ Check service area for conflicts with existing affiliates</li>
+          <li>☐ Validate representative authority and contact information</li>
+          <li>☐ Review organization's alignment with OSOT mission</li>
+          <li>☐ Assess capacity for affiliate responsibilities</li>
+          <li>☐ Verify contact information and website validity</li>
+        </ul>
+      </div>
+
+      <p><strong>Important:</strong> Please process this application within 2-3 business days. The applicant is waiting for notification of the decision.</p>
+
+      <hr style="margin: 30px 0;" />
+      <p style="color: #666; font-size: 12px;">
+        This is an automated message from OSOT Affiliate Management System.<br>
+        Session expires in 7 days. Please process this application promptly.
+      </p>
+    </div>
+  </body>
+</html>

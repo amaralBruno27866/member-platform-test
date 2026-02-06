@@ -1,0 +1,35 @@
+Display name,Description,Data type,Format,Behavior,Required,Searchable,Allow form fill assistance,Choices,Related table,Selecting multiple choices is allowed,Sync with global choice?,Sync this choice with,Default choice,Enum,Autonumber type,Prefix,Minimum number of digits,Seed value,Preview,Schema name,Logical name,Relationship name,Minimum value,Maximum value,Precision source,Time zone adjustment,Maximum character count,IME mode,Enabel auditing,Sortable
+Affiliate_ID,,Autonmber,,,Optional,TRUE,TRUE,,,,,,,,String prefixed number,affi,7,1,affi-0000001,osot_Affiliate_ID,osot_affiliate_id,,,,,,850,Disabled,TRUE,TRUE
+Table_Account_Affiliate,Unique identifier for entity instances,Unique identifier,,,System required,TRUE,FALSE,,,,,,,,,,,,,osot_Table_Account_AffiliateId,osot_table_account_affiliateid,,,,,,,,FALSE,FALSE
+Affiliate_Name,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Affiliate_Name,osot_affiliate_name,,,,,,255,Disabled,TRUE,FALSE
+Representative_First_Name,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Representative_First_Name,osot_representative_first_name,,,,,,255,Disabled,TRUE,FALSE
+Representative_Last_Name,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Representative_Last_Name,osot_representative_last_name,,,,,,255,Disabled,TRUE,TRUE
+Affiliate_Phone,,Single line of text,Phone number,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Affiliate_Phone,osot_affiliate_phone,,,,,,14,Disabled,TRUE,FALSE
+Affiliate_Email,,Single line of text,Email,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Affiliate_Email,osot_affiliate_email,,,,,,255,Disabled,TRUE,FALSE
+Password,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Password,osot_password,,,,,,255,Disabled,TRUE,FALSE
+Affiliate_Area,,Choice,,Simple,Business required,TRUE,TRUE,,,FALSE,YES,Choices_Affiliate_Areas,None,affiliate-area.enum.ts,,,,,,osot_Affiliate_Area,osot_affiliate_area,,,,,,,,TRUE,FALSE
+Account_Declaration,,Yes/No,,Simple,Business required,TRUE,TRUE,No = 0; Yes = 1,,,,,No,,,,,,,osot_Account_Declaration,osot_account_declaration,,,,,,,,TRUE,FALSE
+Active_Member,,Yes/No,,Simple,Optional,TRUE,TRUE,No = 0; Yes = 1,,,,,No,,,,,,,osot_Active_Member,osot_active_member,,,,,,,,TRUE,FALSE
+Account_Status,,Choice,,Simple,Optional,TRUE,TRUE,,,FALSE,YES,Choices_Status,Pending,account-status.enum.ts,,,,,,osot_Account_Status,osot_account_status,,,,,,,,TRUE,FALSE
+Affiliate_Address_1,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Affiliate_Address_1,osot_affiliate_address_1,,,,,,255,Disabled,TRUE,FALSE
+Affiliate_Address_2,,Single line of text,Text,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Affiliate_Address_2,osot_affiliate_address_2,,,,,,255,Disabled,TRUE,FALSE
+Affiliate_City,,Choice,,Simple,Business required,TRUE,TRUE,,,FALSE,YES,Choices_Cities,None,cities.enum.ts,,,,,,osot_Affiliate_City,osot_affiliate_city,,,,,,,,TRUE,FALSE
+Other_City,,Single line of text,Text,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Other_City,osot_other_city,,,,,,255,Auto,TRUE,FALSE
+Affiliate_Province,,Choice,,Simple,Business required,TRUE,TRUE,,,FALSE,YES,Choices_Provinces,Ontario,provinces.enum.ts,,,,,,osot_Affiliate_Province,osot_affiliate_province,,,,,,,,TRUE,FALSE
+Other_Province_State,,Single line of text,Text,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Other_Province_State,osot_other_province_state,,,,,,255,Auto,TRUE,FALSE
+Affiliate_Postal_Code,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Affiliate_Postal_Code,osot_affiliate_postal_code,,,,,,7,Disable,TRUE,FALSE
+Affiliate_Country,,Choice,,Simple,Business required,TRUE,TRUE,,,FALSE,YES,Choices_Countries,Canada,countries.enum.ts,,,,,,osot_Affiliate_Country,osot_affiliate_country,,,,,,,,TRUE,FALSE
+Representative_Job_Title,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_Representative_Job_Title,osot_representative_job_title,,,,,,255,Disabled,TRUE,FALSE
+Affiliate_Website,,Single line of text,URL,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Affiliate_Website,osot_affiliate_website,,,,,,255,Disabled,TRUE,FALSE
+Affiliate_Facebook,,Single line of text,URL,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Affiliate_Facebook,osot_affiliate_facebook,,,,,,255,Disabled,TRUE,FALSE
+Affiliate_Instagram,,Single line of text,URL,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Affiliate_Instagram,osot_affiliate_instagram,,,,,,255,Disabled,TRUE,FALSE
+Affiliate_TikTok,,Single line of text,URL,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Affiliate_TikTok,osot_affiliate_tiktok,,,,,,255,Disabled,TRUE,FALSE
+Affiliate_LinkedIn,,Single line of text,URL,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Affiliate_LinkedIn,osot_affiliate_linkedin,,,,,,255,Disabled,TRUE,FALSE
+Access_Modifiers,,Choice,,Simple,Optional,TRUE,TRUE,,,FALSE,YES,Choices_Access_Modifiers,Private,access-modifier.enum.ts,,,,,,osot_Access_Modifiers,osot_access_modifiers,,,,,,,,TRUE,FALSE
+Privilege,,Choice,,Simple,Optional,TRUE,TRUE,,,FALSE,YES,Choices_Privilege,Owner,privilege.enum.ts,,,,,,osot_Privilege,osot_privilege,,,,,,,,TRUE,FALSE
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Table Information,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Display Name,Table_Account_Affiliate,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Plural Name,Table_Account_Affiliates,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Schema Name,osot_Table_Account_Affiliate,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Logical Name,osot_table_account_affiliate,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

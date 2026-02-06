@@ -1,0 +1,21 @@
+Display name,Description,Data type,Format,Behavior,Required,Searchable,Allow form fill assistance,Choices,Related table,Selecting multiple choices is allowed,Sync with global choice?,Sync this choice with,Default choice,Enum,Autonumber type,Prefix,Minimum number of digits,Seed value,Preview,Schema name,Logical name,Relationship name,Minimum value,Maximum value,Precision source,Time zone adjustment,Maximum character count,IME mode,Enabel auditing,Sortable
+OT_Education_ID,,Autonumber,,,Optional,TRUE,TRUE,,,,,,,,String prefixed number,osot-oted,7,1,osot-oted-0000001,osot_OT_Education_ID,osot_ot_education_id,,,,,,850,Disabled,TRUE,TRUE
+Table_OT_Education,Unique identifier for entity instances,Unique identifier,,,System required,TRUE,FALSE,,,,,,,,,,,,,osot_Table_OT_EducationId,osot_table_ot_educationid,,,,,,,,FALSE,FALSE
+Table_Account,,Lookup,,,Optional,TRUE,TRUE,,Table_Account,,,,,,,,,,,osot_Table_Account,osot_table_account,osot_Account_to_OT_Education,,,,,,,FALSE,FALSE
+User_Business_ID,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_User_Business_ID,osot_user_business_id,,,,,,20,Auto,TRUE,FALSE
+COTO_Status,,Choice,,Simple,Business required,TRUE,TRUE,,,FALSE,YES,Choices_COTO_Status,None,coto-status.enum.ts,,,,,,osot_COTO_Status,osot_coto_status,,,,,,,,TRUE,FALSE
+COTO_Registration,,Single line of text,Text,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_COTO_Registration,osot_coto_registration,,,,,,8,Disabled,TRUE,FALSE
+OT_Degree_Type,,Choice,,Simple,Business required,TRUE,TRUE,,,FALSE,YES,Choices_Degree_Type,Masters,degree-type.enum.ts,,,,,,osot_OT_Degree_Type,osot_ot_degree_type,,,,,,,,TRUE,FALSE
+OT_University,,Choice,,Simple,Business required,TRUE,TRUE,,,FALSE,YES,Choices_OT_Universities,None,ot-university.enum.ts,,,,,,osot_OT_University,osot_ot_university,,,,,,,,TRUE,FALSE
+OT_Grad_Year,,Choice,,Simple,Business required,TRUE,TRUE,,,FALSE,YES,Choices_Years,None,graduation-year.enum.ts,,,,,,osot_OT_Grad_Year,osot_ot_grad_year,,,,,,,,TRUE,FALSE
+Education_Category,,Choice,,Simple,Optional,TRUE,TRUE,,,FALSE,YES,Choices_Education_Category,None,education-category.enum.ts,,,,,,osot_Education_Category,osot_education_category,,,,,,,,TRUE,FALSE
+OT_Country,,Choice,,Simple,Business required,TRUE,TRUE,,,FALSE,YES,Choices_Countries,Canada,countries.enum.ts,,,,,,osot_OT_Country,osot_ot_country,,,,,,,,TRUE,FALSE
+OT_Other,,Single line of text,Text,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_OT_Other,osot_ot_other,,,,,,100,Disabled,TRUE,FALSE
+Access_Modifiers,,Choice,,Simple,Optional,TRUE,TRUE,,,FALSE,YES,Choices_Access_Modifiers,Private,access-modifier.enum.ts,,,,,,osot_Access_Modifiers,osot_access_modifiers,,,,,,,,TRUE,FALSE
+Privilege,,Choice,,Simple,Optional,TRUE,TRUE,,,FALSE,YES,Choices_Privilege,Owner,privilege.enum.ts,,,,,,osot_Privilege,osot_privilege,,,,,,,,TRUE,FALSE
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Table Information,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Display Name,Table_OT_Education,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Plural Name,Table_OT_Educations,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Schema Name,osot_Table_OT_Education,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Logical Name,osot_table_ot_education,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

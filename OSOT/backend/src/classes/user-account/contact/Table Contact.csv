@@ -1,0 +1,22 @@
+Display name,Description,Data type,Format,Behavior,Required,Searchable,Allow form fill assistance,Choices,Related table,Selecting multiple choices is allowed,Sync with global choice?,Sync this choice with,Default choice,Enum,Autonumber type,Prefix,Minimum number of digits,Seed value,Preview,Schema name,Logical name,Relationship name,Minimum value,Maximum value,Precision source,Time zone adjustment,Maximum character count,IME mode,Enabel auditing,Sortable
+Contact_ID,,Autonumber,,,Optional,TRUE,TRUE,,,,,,,,String prefixed number,osot-ct,7,1,osot-ct-0000001,osot_Contact_ID,osot_contact_id,,,,,,850,Disabled,TRUE,TRUE
+Table_Contact,Unique identifier for entity instances,Unique identifier,,,System required,TRUE,FALSE,,,,,,,,,,,,,osot_Table_ContactId,osot_table_contactid,,,,,,,,FALSE,FALSE
+Table_Account,,Lookup,,,Optional,TRUE,TRUE,,Table_Account,,,,,,,,,,,osot_Table_Account,osot_table_account,osot_Account_to_Contact,,,,,,,FALSE,FALSE
+User_Business_ID,,Single line of text,Text,Simple,Business required,TRUE,TRUE,,,,,,,,,,,,,osot_User_Business_ID,osot_user_business_id,,,,,,20,Auto,TRUE,TRUE
+Secondary_Email,,Single line of text,Email,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Secondary_Email,osot_secondary_email,,,,,,255,Disabled,TRUE,FALSE
+Job_Title,,Single line of text,Text,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Job_Title,osot_job_title,,,,,,50,Disabled,TRUE,FALSE
+Home_Phone,,Single line of text,Phone number,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Home_Phone,osot_home_phone,,,,,,14,Disabled,TRUE,FALSE
+Work_Phone,,Single line of text,Phone number,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Work_Phone,osot_work_phone,,,,,,14,Disabled,TRUE,FALSE
+Business_Website,,Single line of text,URL,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Business_Website,osot_business_website,,,,,,255,Disabled,TRUE,FALSE
+Facebook,,Single line of text,URL,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Facebook,osot_facebook,,,,,,255,Disabled,TRUE,FALSE
+Instagram,,Single line of text,URL,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_Instagram,osot_instagram,,,,,,255,Disabled,TRUE,FALSE
+TikTok,,Single line of text,URL,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_TikTok,osot_tiktok,,,,,,255,Disabled,TRUE,FALSE
+LinkedIn,,Single line of text,URL,Simple,Optional,TRUE,TRUE,,,,,,,,,,,,,osot_LinkedIn,osot_linkedin,,,,,,255,Disabled,TRUE,FALSE
+Access_Modifiers,,Choice,,Simple,Optional,TRUE,TRUE,,,FALSE,YES,Choices_Access_Modifiers,Private,access-modifier.enum.ts,,,,,,osot_Access_Modifiers,osot_access_modifiers,,,,,,,,TRUE,FALSE
+Privilege,,Choice,,Simple,Optional,TRUE,TRUE,,,FALSE,YES,Choices_Privilege,Owner,privilege.enum.ts,,,,,,osot_Privilege,osot_privilege,,,,,,,,TRUE,FALSE
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Table Information,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Display Name,Table_Contact,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Plural Name,Table_Contacts,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Schema Name,osot_Table_Contact,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Logical Name,osot_table_contact,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

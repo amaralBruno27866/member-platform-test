@@ -5,7 +5,13 @@ const OrganizationSchema = new Schema<OrganizationDocument>(
   {
     organization_business_id: { type: String, required: true, unique: true, index: true },
     organization_name: { type: String, required: true },
-    organization_email: { type: String, required: true, unique: true, lowercase: true, index: true },
+    organization_email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      index: true
+    },
     organization_phone: { type: String, required: true },
     organization_password_hash: { type: String, required: true },
     organization_logo_url: { type: String },
@@ -16,4 +22,5 @@ const OrganizationSchema = new Schema<OrganizationDocument>(
 );
 
 export const OrganizationModel: Model<OrganizationDocument> =
-  mongoose.models.Organization || mongoose.model<OrganizationDocument>('Organization', OrganizationSchema);
+  mongoose.models.Organization ||
+  mongoose.model<OrganizationDocument>('Organization', OrganizationSchema);

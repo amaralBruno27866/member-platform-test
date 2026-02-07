@@ -9,7 +9,7 @@
  */
 export enum Privilege {
   USER = 1,
-  ADMIN = 2,
+  ADMIN = 2
 }
 
 export const getPrivilegeLabel = (privilege: Privilege): string => {

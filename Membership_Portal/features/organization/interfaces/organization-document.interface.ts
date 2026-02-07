@@ -1,10 +1,10 @@
 import { Document } from 'mongoose';
 
-/** 
+/**
  * Organization Document Interface
- * 
+ *
  * MongoDB representation of the Organization entity.
- * 
+ *
  * @file organization-document.interface.ts
  * @module Organization
  * @layer Interfaces

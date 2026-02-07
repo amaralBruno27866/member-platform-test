@@ -23,7 +23,10 @@ export class OrganizationMongoRepository implements OrganizationRepository {
     return OrganizationModel.findOne({ organization_email: email.toLowerCase() }).exec();
   }
 
-  async updateById(id: string, data: OrganizationUpdateInput): Promise<OrganizationDocument | null> {
+  async updateById(
+    id: string,
+    data: OrganizationUpdateInput
+  ): Promise<OrganizationDocument | null> {
     return OrganizationModel.findByIdAndUpdate(id, data, { new: true }).exec();
   }
 

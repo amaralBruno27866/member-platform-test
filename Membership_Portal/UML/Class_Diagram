@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gaphor xmlns="https://gaphor.org/model" xmlns:Core="https://gaphor.org/modelinglanguage/Core" xmlns:UML="https://gaphor.org/modelinglanguage/UML" version="4" gaphor-version="3.2.0">
+<model>
+<Core:StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
+<UML:Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
+<name>
+<val>New model</val>
+</name>
+<ownedDiagram>
+<reflist>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</reflist>
+</ownedDiagram>
+<ownedType>
+<reflist>
+<ref refid="8dc351ef-0616-11f1-a29b-e39f7c2631bc"/>
+</reflist>
+</ownedType>
+<packagedElement>
+<reflist>
+<ref refid="8dc351ef-0616-11f1-a29b-e39f7c2631bc"/>
+</reflist>
+</packagedElement>
+</UML:Package>
+<UML:Diagram id="58d6c536-66f8-11ec-b4c8-0456e5e540ed">
+<element>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</element>
+<name>
+<val>New Diagram</val>
+</name>
+<ownedPresentation>
+<reflist>
+<ref refid="8dc3ce3b-0616-11f1-bf68-e39f7c2631bc"/>
+<ref refid="5a1db167-0618-11f1-8caf-e39f7c2631bc"/>
+</reflist>
+</ownedPresentation>
+</UML:Diagram>
+<UML:Class id="8dc351ef-0616-11f1-a29b-e39f7c2631bc">
+<name>
+<val>Organization</val>
+</name>
+<nestedClassifier>
+<reflist>
+<ref refid="5a1d5a6f-0618-11f1-82e6-e39f7c2631bc"/>
+</reflist>
+</nestedClassifier>
+<owningPackage>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</owningPackage>
+<package>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="8dc3ce3b-0616-11f1-bf68-e39f7c2631bc"/>
+</reflist>
+</presentation>
+</UML:Class>
+<UML:ClassItem id="8dc3ce3b-0616-11f1-bf68-e39f7c2631bc">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 108.94139099121094, 52.42189025878906)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>120.8203125</val>
+</width>
+<height>
+<val>124.171875</val>
+</height>
+<diagram>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</diagram>
+<subject>
+<ref refid="8dc351ef-0616-11f1-a29b-e39f7c2631bc"/>
+</subject>
+</UML:ClassItem>
+<UML:Class id="5a1d5a6f-0618-11f1-82e6-e39f7c2631bc">
+<name>
+<val>Account</val>
+</name>
+<nestingClass>
+<ref refid="8dc351ef-0616-11f1-a29b-e39f7c2631bc"/>
+</nestingClass>
+<presentation>
+<reflist>
+<ref refid="5a1db167-0618-11f1-8caf-e39f7c2631bc"/>
+</reflist>
+</presentation>
+</UML:Class>
+<UML:ClassItem id="5a1db167-0618-11f1-8caf-e39f7c2631bc">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 266.08203125, 52.42189025878906)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>119.26171875</val>
+</width>
+<height>
+<val>124.171875</val>
+</height>
+<diagram>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</diagram>
+<subject>
+<ref refid="5a1d5a6f-0618-11f1-82e6-e39f7c2631bc"/>
+</subject>
+</UML:ClassItem>
+</model>
+</gaphor>

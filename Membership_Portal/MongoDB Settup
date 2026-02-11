@@ -1,0 +1,6 @@
+Username: balencaramaral_db_user
+Password: 099Al4Ab4LhT4zLf
+
+mongodb+srv://balencaramaral_db_user:099Al4Ab4LhT4zLf@cluster0.ov2ah5l.mongodb.net/?appName=Cluster0
+
+Connection string: mongodb+srv://balencaramaral_db_user:<db_password>@cluster0.ov2ah5l.mongodb.net/

@@ -1,0 +1,16 @@
+schemas – define o modelo de dados (Mongo).
+interfaces – contratos (ex: IAccountRepository, IAccountService).
+repositories – acesso a dados (CRUD no Mongo).
+validators – valida entrada (DTOs, regras basicas).
+rules - define as regras de negocio para a entidade.
+services – regras de negocio (usa repository + validators).
+mappers – converte entre DTOs e entidades.
+controllers – expõe endpoints/handlers.
+modules – faz o wiring (DI/rotas, registra controller/service).
+events – eventos de dominio/side-effects (emails, logs).
+constants – valores compartilhados (usado ao longo do processo).
+views – UI (user/admin) depois que a API estiver funcional.
+
+Redis
+Matrix CRUD
+Table_Organization.csv

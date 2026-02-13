@@ -1,7 +1,7 @@
 schemas – define o modelo de dados (Mongo).
 interfaces – contratos (ex: IAccountRepository, IAccountService).
-repositories – acesso a dados (CRUD no Mongo).
 validators – valida entrada (DTOs, regras basicas).
+repositories – acesso a dados (CRUD no Mongo).
 rules - define as regras de negocio para a entidade.
 services – regras de negocio (usa repository + validators).
 mappers – converte entre DTOs e entidades.

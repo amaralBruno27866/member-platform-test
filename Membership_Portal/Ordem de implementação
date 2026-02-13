@@ -1,10 +1,10 @@
 schemas – define o modelo de dados (Mongo).
 interfaces – contratos (ex: IAccountRepository, IAccountService).
 validators – valida entrada (DTOs, regras basicas).
+mappers – converte entre DTOs e entidades.
 repositories – acesso a dados (CRUD no Mongo).
 rules - define as regras de negocio para a entidade.
 services – regras de negocio (usa repository + validators).
-mappers – converte entre DTOs e entidades.
 controllers – expõe endpoints/handlers.
 modules – faz o wiring (DI/rotas, registra controller/service).
 events – eventos de dominio/side-effects (emails, logs).
@@ -14,3 +14,4 @@ views – UI (user/admin) depois que a API estiver funcional.
 Redis
 Matrix CRUD
 Table_Organization.csv
+Security Loggers - centralizados
